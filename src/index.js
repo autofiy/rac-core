@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import SimpleTableExample from "./example/SimpleTableExample";
 
-
-const App = () => <h1>AUTO COLLECTION</h1>;
 
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        <div>
+            <SimpleTableExample/>
+            <hr/>
+        </div>
     </React.StrictMode>,
     document.getElementById('root')
 );
