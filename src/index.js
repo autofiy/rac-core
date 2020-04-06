@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SimpleTableExample from "./example/SimpleTableExample";
+import SimpleTableContainerExample from "./example/SimpleTableContainerExample";
 
 
 ReactDOM.render(
@@ -8,6 +9,7 @@ ReactDOM.render(
         <div>
             <SimpleTableExample/>
             <hr/>
+            <SimpleTableContainerExample/>
         </div>
     </React.StrictMode>,
     document.getElementById('root')
