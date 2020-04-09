@@ -12,6 +12,10 @@ export interface TableRenderOptionsConfig extends CollectionRenderOptionsConfig 
     headerRowProps?: any;
     rowClassName?: string | ((item: any, index: number) => any);
     rowProps?: any;
+    cellClassName?: string | ((item: any, index: number) => any);
+    cellProps?: any;
+    headerCellClassName?: string;
+    headerCellProps?: any;
 }
 export declare class TableRenderOptions extends BaseCollectionRenderOptions<Column, TableRenderOptionsConfig> {
     protected columns: Column[];
@@ -23,4 +27,8 @@ export declare class TableRenderOptions extends BaseCollectionRenderOptions<Colu
     getHeaderRowProps(): any;
     getRowClassName(item: any, index: number): string;
     getRowProps(item: any, index: number): any;
+    getCellClassName(item: any, index: number): string;
+    getCellProps(item: any, index: number): any;
+    getHeaderCellClassName(): string;
+    getHeaderCellProps(): any;
 }

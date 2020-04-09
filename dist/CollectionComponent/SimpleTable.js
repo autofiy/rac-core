@@ -48,9 +48,11 @@ var SimpleTable = /** @class */ (function (_super) {
             var renderFunction = column.getCustomHeaderCellRender();
             if (renderFunction)
                 return (React.createElement(React.Fragment, { key: column.getName() }, renderFunction()));
+            var options = _this.getRenderOptions();
             var headerCellProps = column.getHeaderCellProps();
+            var headerCellClassName = column.getHeaderCellClassName() ? column.getHeaderCellClassName() : options.getHeaderCellClassName();
             return React.createElement(React.Fragment, { key: column.getName() },
-                React.createElement("th", __assign({ key: column.getName() }, headerCellProps), column.getTitle()));
+                React.createElement("th", __assign({ className: headerCellClassName, key: column.getName() }, headerCellProps), column.getTitle()));
         };
         _this.renderRow = function (item, index, columns) {
             var options = _this.getRenderOptions();
@@ -70,8 +72,9 @@ var SimpleTable = /** @class */ (function (_super) {
             var renderFunction = column.getCustomCellRender();
             if (renderFunction)
                 return (React.createElement(React.Fragment, { key: column.getName() }, renderFunction(value, item, index)));
-            var cellClassName = column.getCellClassName(item, index);
-            var cellProps = column.getCellProps();
+            var options = _this.getRenderOptions();
+            var cellClassName = column.getCellClassName(item, index) ? column.getCellClassName(item, index) : options.getCellClassName(item, index);
+            var cellProps = Object.keys(column.getCellProps()).length > 0 ? column.getCellProps() : options.getCellProps(item, index);
             return (React.createElement(React.Fragment, { key: column.getName() },
                 React.createElement("td", __assign({ className: cellClassName }, cellProps), value)));
         };

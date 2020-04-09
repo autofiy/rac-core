@@ -72,6 +72,25 @@ var TableRenderOptions = /** @class */ (function (_super) {
         var _a;
         return (_a = this.config.rowProps) !== null && _a !== void 0 ? _a : {};
     };
+    TableRenderOptions.prototype.getCellClassName = function (item, index) {
+        if (typeof this.config.cellClassName === "function")
+            return this.config.cellClassName(item, index);
+        if (typeof this.config.cellClassName === "string")
+            return this.config.cellClassName;
+        return '';
+    };
+    TableRenderOptions.prototype.getCellProps = function (item, index) {
+        var _a;
+        return (_a = this.config.cellProps) !== null && _a !== void 0 ? _a : {};
+    };
+    TableRenderOptions.prototype.getHeaderCellClassName = function () {
+        var _a;
+        return (_a = this.config.headerCellClassName) !== null && _a !== void 0 ? _a : '';
+    };
+    TableRenderOptions.prototype.getHeaderCellProps = function () {
+        var _a;
+        return (_a = this.config.headerCellProps) !== null && _a !== void 0 ? _a : {};
+    };
     return TableRenderOptions;
 }(BaseCollectionRenderOptions));
 export { TableRenderOptions };

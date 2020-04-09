@@ -47,7 +47,7 @@ export class SimpleTable<ItemDataType, RenderOptions extends TableRenderOptions,
             </React.Fragment>);
         const options = this.getRenderOptions();
         const headerCellProps = column.getHeaderCellProps();
-        const headerCellClassName = column.getHeaderCellClassName() ?? options.getHeaderCellClassName();
+        const headerCellClassName = column.getHeaderCellClassName() ? column.getHeaderCellClassName() : options.getHeaderCellClassName();
         return <React.Fragment key={column.getName()}>
             <th className={headerCellClassName} key={column.getName()} {...headerCellProps}>{column.getTitle()}</th>
         </React.Fragment>;
@@ -81,7 +81,8 @@ export class SimpleTable<ItemDataType, RenderOptions extends TableRenderOptions,
             </React.Fragment>);
 
         const options = this.getRenderOptions();
-        const cellClassName = column.getCellClassName(item, index) ?? options.getCellClassName(item, index);
+
+        const cellClassName = column.getCellClassName(item, index) ? column.getCellClassName(item, index) : options.getCellClassName(item, index);
         const cellProps = Object.keys(column.getCellProps()).length > 0 ? column.getCellProps() : options.getCellProps(item, index);
         return (<React.Fragment key={column.getName()}>
             <td className={cellClassName} {...cellProps}>{value}</td>
