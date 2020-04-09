@@ -1,10 +1,10 @@
-import {BaseCollectionRenderOptions, CollectionRenderOptionsConfig} from "../CollectionRenderOptions";
-import {Column, ColumnConfig} from "./Column";
+import { BaseCollectionRenderOptions, CollectionRenderOptionsConfig } from "../CollectionRenderOptions";
+import { Column, ColumnConfig } from "./Column";
 
 
 export interface TableRenderOptionsConfig extends CollectionRenderOptionsConfig {
     columns?: ColumnConfig[];
-    nameMap?: { [name: string]: string };
+    titleMap?: { [name: string]: string };
     overrideColumns?: { [name: string]: ColumnConfig };
 
 
@@ -13,6 +13,14 @@ export interface TableRenderOptionsConfig extends CollectionRenderOptionsConfig 
 
     rowClassName?: string | ((item: any, index: number) => any);
     rowProps?: any;
+
+
+    cellClassName?: string | ((item: any, index: number) => any);
+    cellProps?: any;
+
+    headerCellClassName?: string;
+    headerCellProps?: any;
+
 }
 
 export class TableRenderOptions extends BaseCollectionRenderOptions<Column, TableRenderOptionsConfig> {
@@ -45,7 +53,7 @@ export class TableRenderOptions extends BaseCollectionRenderOptions<Column, Tabl
     }
 
     private extractColumns(keysOfData: string[]): Column[] {
-        const nameMap = this.config.nameMap ?? {};
+        const nameMap = this.config.titleMap ?? {};
         const overrideColumns = this.config.overrideColumns ?? {};
 
         const columns: Column[] = [];
@@ -55,7 +63,7 @@ export class TableRenderOptions extends BaseCollectionRenderOptions<Column, Tabl
                 return;
             }
             let title = nameMap[key] ?? key;
-            columns.push(new Column({name: key, title: title}));
+            columns.push(new Column({ name: key, title: title }));
         });
         return columns;
     }
@@ -79,6 +87,27 @@ export class TableRenderOptions extends BaseCollectionRenderOptions<Column, Tabl
     // noinspection JSUnusedLocalSymbols
     public getRowProps(item: any, index: number) {
         return this.config.rowProps ?? {};
+    }
+
+    public getCellClassName(item: any, index: number): string {
+        if (typeof this.config.cellClassName === "function")
+            return this.config.cellClassName(item, index);
+        if (typeof this.config.cellClassName === "string")
+            return this.config.cellClassName;
+        return '';
+    }
+
+    public getCellProps(item: any, index: number): any {
+        return this.config.cellProps ?? {};
+    }
+
+
+    public getHeaderCellClassName(): string {
+        return this.config.headerCellClassName ?? '';
+    }
+
+    public getHeaderCellProps(): any {
+        return this.config.headerCellProps ?? {};
     }
 
 

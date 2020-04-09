@@ -1,13 +1,19 @@
-import {BaseCollectionContainer, BaseCollectionContainerProps} from "./CollectionContainer";
+import {
+    BaseCollectionContainer,
+    BaseCollectionContainerProps,
+    BaseCollectionContainerState
+} from "./CollectionContainer";
 import {IndexedKeyExtractor, KeyExtractor} from "../KeyExtractor/KeyExtractor";
 import React from "react";
 import {SimpleTable} from "../CollectionComponent/SimpleTable";
 
 
-export default class SimpleTableContainer extends BaseCollectionContainer {
+export default class SimpleTableContainer<Props extends BaseCollectionContainerProps = BaseCollectionContainerProps,
+    State extends BaseCollectionContainerState = BaseCollectionContainerState>
+    extends BaseCollectionContainer<Props, State> {
     protected readonly keyExtractor: KeyExtractor;
 
-    constructor(props: BaseCollectionContainerProps) {
+    constructor(props: Props) {
         super(props);
         this.keyExtractor = props.keyExtractor ?? new IndexedKeyExtractor();
     }

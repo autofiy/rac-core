@@ -12,7 +12,7 @@ class SimpleTableContainerExample extends Component {
                     name: 'name', title: 'Nm', renderCell: value => <td>{String(value).toUpperCase()}</td>
                 }
             },
-            nameMap: {link: 'Action'}
+            titleMap: {link: 'Action'}
         });
 
         return (

@@ -5,7 +5,7 @@ export interface AxiosFetchOption {
     url: string;
     method: "get" | "post",
     config?: AxiosRequestConfig;
-    data?: any;
+    axiosDataRequest?: any;
     extractDataFromResponse?: (response: AxiosResponse) => any;
 }
 
@@ -18,18 +18,23 @@ export class AxiosDataSource<T = any> implements DataSource<T, AxiosFetchOption>
 
     getData(): Promise<any> {
         return new Promise<T[]>((resolve, reject) => {
-            this.getPromise()
+
+            const url = this.options.url;
+            const axiosDataRequest = this.options.axiosDataRequest;
+            const axiosRequestConfig = this.options.config;
+
+            this.getPromise(url , axiosDataRequest , axiosRequestConfig)
                 .then((response: AxiosResponse) => setTimeout(() => resolve(this.getDataFromResponse(response)), 2000))
                 .catch((e: any) => reject(e))
         });
     }
 
-    private getPromise(): AxiosPromise {
+    protected getPromise(url: string, axiosDataRequest?: any, axiosConfig?: AxiosRequestConfig): AxiosPromise {
         const options = this.getOptions();
         if (options.method === "get")
             return Axios.get(options.url, options.config);
         else if (options.method === "post")
-            return Axios.post(options.url, options.data, options.config);
+            return Axios.post(url, axiosDataRequest, axiosConfig);
 
         throw new Error(`Method ${options.method} is not supported`);
     }

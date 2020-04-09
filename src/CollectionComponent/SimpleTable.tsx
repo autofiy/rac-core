@@ -1,35 +1,24 @@
-import {BaseCollectionComponent, BaseCollectionComponentProps} from "./CollectionComponent";
+import { BaseCollectionComponent, BaseCollectionComponentProps } from "./CollectionComponent";
 import React from "react";
-import {TableRenderOptions} from "../Config/Table/TableRenderOption";
-import {Column} from "../Config/Table/Column";
+import { TableRenderOptions } from "../Config/Table/TableRenderOption";
+import { Column } from "../Config/Table/Column";
 
 
 export class SimpleTable<ItemDataType, RenderOptions extends TableRenderOptions,
     Props extends BaseCollectionComponentProps<ItemDataType, RenderOptions>,
-    State = any> extends BaseCollectionComponent<ItemDataType, RenderOptions, Props, State> {
+    State = any> extends BaseCollectionComponent<Column, ItemDataType, RenderOptions, Props, State> {
 
-    public render(): any {
-        const table = this.renderTableElement();
-        return this.renderTableWrapper(table);
-    }
 
-    protected renderTableWrapper = (table: any): any => {
-        const options = this.getRenderOptions();
-        const Wrapper = options.getCollectionWrapper();
-        const props = options.getWrapperProps();
-        return (<Wrapper {...props}>{table}</Wrapper>);
-    };
-
-    protected renderTableElement = (): any => {
+    protected renderCollection = (): any => {
         const options = this.getRenderOptions();
         const columns = options.getProperties(this.getData());
         const className = options.getCollectionClassName();
         return (<table className={className}>
             {this.renderTableHeader()}
             <tbody>
-            {
-                this.getData().map((value, index) => this.renderRow(value, index, columns))
-            }
+                {
+                    this.getData().map((value, index) => this.renderRow(value, index, columns))
+                }
             </tbody>
         </table>);
     };
@@ -42,11 +31,11 @@ export class SimpleTable<ItemDataType, RenderOptions extends TableRenderOptions,
         const rowProps = options.getHeaderRowProps();
 
         return (<thead>
-        <tr className={className} {...rowProps}>
-            {
-                columns.map(column => this.renderHeaderCell(column))
-            }
-        </tr>
+            <tr className={className} {...rowProps}>
+                {
+                    columns.map(column => this.renderHeaderCell(column))
+                }
+            </tr>
         </thead>);
     };
 
@@ -56,9 +45,11 @@ export class SimpleTable<ItemDataType, RenderOptions extends TableRenderOptions,
             return (<React.Fragment key={column.getName()}>
                 {renderFunction()}
             </React.Fragment>);
+        const options = this.getRenderOptions();
         const headerCellProps = column.getHeaderCellProps();
+        const headerCellClassName = column.getHeaderCellClassName() ?? options.getHeaderCellClassName();
         return <React.Fragment key={column.getName()}>
-            <th key={column.getName()} {...headerCellProps}>{column.getTitle()}</th>
+            <th className={headerCellClassName} key={column.getName()} {...headerCellProps}>{column.getTitle()}</th>
         </React.Fragment>;
     };
 
@@ -89,8 +80,9 @@ export class SimpleTable<ItemDataType, RenderOptions extends TableRenderOptions,
                 {renderFunction(value, item, index)}
             </React.Fragment>);
 
-        const cellClassName = column.getCellClassName(item, index);
-        const cellProps = column.getCellProps();
+        const options = this.getRenderOptions();
+        const cellClassName = column.getCellClassName(item, index) ?? options.getCellClassName(item, index);
+        const cellProps = Object.keys(column.getCellProps()).length > 0 ? column.getCellProps() : options.getCellProps(item, index);
         return (<React.Fragment key={column.getName()}>
             <td className={cellClassName} {...cellProps}>{value}</td>
         </React.Fragment>);

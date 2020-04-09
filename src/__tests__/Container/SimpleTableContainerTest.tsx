@@ -111,4 +111,67 @@ describe('Simple Table Container', () => {
         expect(renderEmpty).toBeCalledTimes(1);
     });
 
+    it('should call start/done callbacks', async function () {
+        const onFetchDone = jest.fn();
+        const onFetchStart = jest.fn();
+        const axiosMock = new AxiosMockAdapter(Axios);
+        axiosMock.onGet('/test').reply(200, []);
+        const root: any = mount(<SimpleTableContainer collectionOptions={new TableRenderOptions({})}
+                                                      onFetchDone={onFetchDone}
+                                                      onFetchStart={onFetchStart}
+                                                      dataSource={new AxiosDataSource({
+                                                          url: '/test',
+                                                          method: 'get'
+                                                      })}/>);
+
+        await waitUntil(() => root.state('loading') !== true);
+        expect(onFetchStart).toBeCalledTimes(1);
+        expect(onFetchDone).toBeCalledTimes(1);
+    });
+
+    it('should call start/fail callbacks', async function () {
+        const onFetchFail = jest.fn();
+        const onFetchStart = jest.fn();
+        const axiosMock = new AxiosMockAdapter(Axios);
+        axiosMock.onGet('/test').networkError();
+        const root: any = mount(<SimpleTableContainer collectionOptions={new TableRenderOptions({})}
+                                                      onFetchFail={onFetchFail}
+                                                      onFetchStart={onFetchStart}
+                                                      dataSource={new AxiosDataSource({
+                                                          url: '/test',
+                                                          method: 'get'
+                                                      })}/>);
+
+        await waitUntil(() => root.state('loading') !== true);
+        expect(onFetchStart).toBeCalledTimes(1);
+        expect(onFetchFail).toBeCalledTimes(1);
+    });
+
+    it('should append/remove/update items', async function () {
+        const axiosMock = new AxiosMockAdapter(Axios);
+        axiosMock.onGet('/test').reply(200, [{name: 'Ali'}]);
+        const root: any = mount(<SimpleTableContainer collectionOptions={new TableRenderOptions({})}
+                                                      dataSource={new AxiosDataSource({
+                                                          url: '/test',
+                                                          method: 'get'
+                                                      })}/>);
+
+        await waitUntil(() => root.state('loading') !== true);
+
+        const instance = root.instance() as SimpleTableContainer;
+        expect(root.state('data')).toEqual([{name: 'Ali'}]);
+        instance.appendItemFirst({name: 'Huda'});
+        expect(root.state('data')).toEqual([{name: 'Huda'}, {name: 'Ali'}]);
+        instance.appendItemLast({name: 'Mohammed'});
+        expect(root.state('data')).toEqual([{name: 'Huda'}, {name: 'Ali'}, {name: 'Mohammed'}]);
+        instance.appendItemAt(1, {name: 'Fatima'});
+        expect(root.state('data')).toEqual([{name: 'Huda'}, {name: 'Fatima'}, {name: 'Ali'}, {name: 'Mohammed'}]);
+        instance.removeAt(0);
+        expect(root.state('data')).toEqual([{name: 'Fatima'}, {name: 'Ali'}, {name: 'Mohammed'}]);
+        instance.removeAt(2);
+        expect(root.state('data')).toEqual([{name: 'Fatima'}, {name: 'Ali'}]);
+        instance.updateItem(1, {name: 'ALI-FARIS'});
+        expect(root.state('data')).toEqual([{name: 'Fatima'}, {name: 'ALI-FARIS'}]);
+    });
+
 });

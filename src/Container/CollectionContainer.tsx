@@ -4,7 +4,7 @@ import {KeyExtractor} from "../KeyExtractor/KeyExtractor";
 import {BaseCollectionRenderOptions} from "../Config/CollectionRenderOptions";
 
 export interface CollectionContainer {
-    fetchData(): void;
+    startDataFetch(): void;
 
     renderLoading(): any;
 
@@ -15,6 +15,8 @@ export interface CollectionContainer {
     renderCollection(): any;
 
     render(): any;
+
+    getData(): any[];
 }
 
 
@@ -27,6 +29,10 @@ export interface BaseCollectionContainerProps<RenderOptions extends BaseCollecti
 
     collectionOptions: RenderOptions;
     keyExtractor?: KeyExtractor;
+
+    onFetchDone?: (data: any) => void;
+    onFetchFail?: (e: any) => void;
+    onFetchStart?: () => void;
 }
 
 export interface BaseCollectionContainerState<T = any> {
@@ -47,15 +53,25 @@ export abstract class BaseCollectionContainer<Props extends BaseCollectionContai
     }
 
     componentDidMount(): void {
-        this.fetchData();
+        if (this.props.onFetchStart)
+            this.props.onFetchStart();
+        this.startDataFetch();
     }
 
-    fetchData(): any {
+    startDataFetch(): any {
         const {dataSource} = this.props;
         this.setState({loading: true, error: false});
         dataSource.getData()
-            .then(data => this.setState({loading: false, error: null, data: data}))
-            .catch(e => this.setState({loading: false, error: e, data: []}));
+            .then(data => {
+                this.setState({loading: false, error: null, data: data});
+                if (this.props.onFetchDone)
+                    this.props.onFetchDone(data);
+            })
+            .catch(e => {
+                this.setState({loading: false, error: e, data: []});
+                if (this.props.onFetchFail)
+                    this.props.onFetchFail(e);
+            });
     }
 
 
@@ -88,4 +104,39 @@ export abstract class BaseCollectionContainer<Props extends BaseCollectionContai
     }
 
     public abstract renderCollection(): any;
+
+
+    public appendItemAt = (index: number, item: any) => {
+        const data = [...this.state.data];
+        data.splice(index, 0, item);
+        this.setState({data: data});
+    };
+
+    public appendItemFirst = (item: any): void => {
+        this.appendItemAt(0, item);
+    };
+
+    public appendItemLast = (item: any): void => {
+        const data = [...this.state.data];
+        data.push(item);
+        this.setState({data: data});
+    };
+
+    public removeAt = (index: number): void => {
+        const data = [...this.state.data];
+        data.splice(index, 1);
+        this.setState({data: data});
+    };
+
+
+    public updateItem = (index: number, item: any) => {
+        const data = [...this.state.data];
+        data[index] = item;
+        this.setState({data: data});
+    };
+
+    getData(): any[] {
+        return this.state.data;
+    }
+
 }

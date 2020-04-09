@@ -39,6 +39,10 @@ export interface CollectionRenderOptions<P extends Property> {
     getCollectionProps(): any;
 
     getCollectionClassName(): string;
+
+    getBeforeCollectionRender(): any;
+
+    getAfterCollectionRender(): any;
 }
 
 
@@ -50,6 +54,10 @@ export interface CollectionRenderOptionsConfig {
     wrapperProps?: any;
 
     renderItem?: (item: any, index: number, key: any, properties: any[]) => any;
+
+
+    renderBeforeCollection?: () => any;
+    renderAfterCollection?: () => any;
 
 }
 
@@ -81,6 +89,14 @@ export abstract class BaseCollectionRenderOptions<P extends Property, Config ext
 
     getCustomItemRender(): ((item: any, index: number, key: any, properties: P[]) => any) | undefined {
         return this.config.renderItem;
+    }
+
+    getBeforeCollectionRender(): any {
+        return this.config.renderBeforeCollection;
+    }
+
+    getAfterCollectionRender(): any {
+        return this.config.renderAfterCollection;
     }
 
     abstract getProperties(data: any): P[];

@@ -65,7 +65,7 @@ describe('TableRenderOptions', () => {
             {id: 1, name: 'ali', category: 'category', age: 19}
         ];
         const options = new TableRenderOptions({
-            nameMap: {id: 'Person#'}, overrideColumns: {age: {name: 'age', title: 'EmpAge', cellClassName: 'age-cell'}}
+            titleMap: {id: 'Person#'}, overrideColumns: {age: {name: 'age', title: 'EmpAge', cellClassName: 'age-cell'}}
         });
         const columns = options.getProperties(data);
         expect(columns).toHaveLength(4);
