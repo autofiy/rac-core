@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 import { BaseCollectionRenderOptions } from "../CollectionRenderOptions";
 import { Column } from "./Column";
+import { ColumnOrder } from "./ColumnOrder";
 var TableRenderOptions = /** @class */ (function (_super) {
     __extends(TableRenderOptions, _super);
     function TableRenderOptions(config) {
@@ -26,7 +27,19 @@ var TableRenderOptions = /** @class */ (function (_super) {
             this.columns = [];
             return;
         }
-        this.columns = this.config.columns.map(function (columnConfig) { return new Column(columnConfig); });
+        this.columns = this.config.columns.map(function (columnConfig) { return new Column(columnConfig); })
+            .concat(this.getExtraColumns());
+    };
+    TableRenderOptions.prototype.getExtraColumns = function () {
+        if (this.config.extraColumns) {
+            var columns = [];
+            for (var _i = 0, _a = this.config.extraColumns; _i < _a.length; _i++) {
+                var extraColumn = _a[_i];
+                columns.push(new Column(extraColumn));
+            }
+            return columns;
+        }
+        return [];
     };
     TableRenderOptions.prototype.getProperties = function (data) {
         var _a;
@@ -50,7 +63,8 @@ var TableRenderOptions = /** @class */ (function (_super) {
             var title = (_a = nameMap[key]) !== null && _a !== void 0 ? _a : key;
             columns.push(new Column({ name: key, title: title }));
         });
-        return columns;
+        var allColumns = columns.concat(this.getExtraColumns());
+        return new ColumnOrder(allColumns, this.config.orderBy).order();
     };
     TableRenderOptions.prototype.getHeaderRowClassName = function () {
         var _a;
@@ -79,6 +93,7 @@ var TableRenderOptions = /** @class */ (function (_super) {
             return this.config.cellClassName;
         return '';
     };
+    // noinspection JSUnusedLocalSymbols
     TableRenderOptions.prototype.getCellProps = function (item, index) {
         var _a;
         return (_a = this.config.cellProps) !== null && _a !== void 0 ? _a : {};

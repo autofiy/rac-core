@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SimpleTable should match snapshot 1`] = `"<table class=\\"\\"><thead><tr class=\\"\\"><th>id</th><th>name</th></tr></thead><tbody><tr class=\\"\\"><td class=\\"\\">1</td><td class=\\"\\">Ali</td></tr></tbody></table>"`;
+exports[`SimpleTable should match snapshot 1`] = `"<table class=\\"\\"><thead><tr class=\\"\\"><th class=\\"\\">id</th><th class=\\"\\">name</th></tr></thead><tbody><tr class=\\"\\"><td class=\\"\\">1</td><td class=\\"\\">Ali</td></tr></tbody></table>"`;

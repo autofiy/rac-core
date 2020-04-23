@@ -2,6 +2,8 @@ import { BaseCollectionRenderOptions, CollectionRenderOptionsConfig } from "../C
 import { Column, ColumnConfig } from "./Column";
 export interface TableRenderOptionsConfig extends CollectionRenderOptionsConfig {
     columns?: ColumnConfig[];
+    extraColumns?: ColumnConfig[];
+    orderBy?: string[] | ((columns: Column[]) => string[]);
     titleMap?: {
         [name: string]: string;
     };
@@ -21,6 +23,7 @@ export declare class TableRenderOptions extends BaseCollectionRenderOptions<Colu
     protected columns: Column[];
     constructor(config: TableRenderOptionsConfig);
     private initializeColumns;
+    protected getExtraColumns(): Column[];
     getProperties(data: any): Column[];
     private extractColumns;
     getHeaderRowClassName(): string;

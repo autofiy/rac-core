@@ -9,3 +9,4 @@ export * from "./Config/Table/Column";
 export * from "./Config/Table/TableRenderOption";
 export * from "./CollectionComponent/CollectionComponent";
 export * from "./CollectionComponent/SimpleTable";
+export * from "./Config/Table/ColumnOrder";

@@ -13,6 +13,13 @@ describe('TableRenderOptions', () => {
         expect(options.getCollectionClassName()).toEqual('');
         expect(options.getCollectionProps()).toEqual({});
         expect(options.getWrapperProps()).toEqual({});
+
+        expect(options.getHeaderCellProps()).toEqual({});
+        expect(options.getHeaderCellClassName()).toEqual('');
+
+        expect(options.getCellClassName({}, 0)).toEqual('');
+        expect(options.getCellProps({}, 0)).toEqual({});
+
         expect(options.getProperties([])).toEqual([]);
         expect(options.getCustomItemRender()).toBeUndefined();
     });
@@ -23,18 +30,37 @@ describe('TableRenderOptions', () => {
         expect(className).toEqual('table-header');
     });
 
-    it('should return row classname from string', function () {
-        const options = new TableRenderOptions({rowClassName: 'row'});
-        const className = options.getRowClassName(null, 0);
-        expect(className).toEqual('row');
-    });
+
+    describe('Row/Cell', () => {
+
+        it('should return row classname from string', function () {
+            const options = new TableRenderOptions({rowClassName: 'row'});
+            const className = options.getRowClassName(null, 0);
+            expect(className).toEqual('row');
+        });
 
 
-    it('should return row classname from function', function () {
-        const options = new TableRenderOptions({rowClassName: (item: any, index) => `${item.name}-${index}`});
-        const className = options.getRowClassName({name: 'row'}, 1);
-        expect(className).toEqual('row-1');
-    });
+        it('should return row classname from function', function () {
+            const options = new TableRenderOptions({rowClassName: (item: any, index) => `${item.name}-${index}`});
+            const className = options.getRowClassName({name: 'row'}, 1);
+            expect(className).toEqual('row-1');
+        });
+
+
+        it('should return cell classname from string', function () {
+            const options = new TableRenderOptions({cellClassName: 'cell'});
+            const className = options.getCellClassName(null, 0);
+            expect(className).toEqual('cell');
+        });
+
+
+        it('should return cell classname from function', function () {
+            const options = new TableRenderOptions({cellClassName: (item: any, index) => `${item.name}-${index}`});
+            const className = options.getCellClassName({name: 'cell'}, 1);
+            expect(className).toEqual('cell-1');
+        });
+    })
+
 
     it('should return header row props', function () {
         const options = new TableRenderOptions({headerRowProps: {x: 1}});
@@ -98,6 +124,44 @@ describe('TableRenderOptions', () => {
     it('should return collection classname', function () {
         const options = new TableRenderOptions({collectionClassName: 'test-class-name'});
         expect(options.getCollectionClassName()).toEqual('test-class-name');
+    });
+
+
+    it('should return headerCellClassName/headerCellProps', function () {
+        const options = new TableRenderOptions({
+            headerCellClassName: 'header-cell-class-name',
+            headerCellProps: {x: 1}
+        });
+        expect(options.getHeaderCellClassName()).toEqual('header-cell-class-name');
+        expect(options.getHeaderCellProps()).toEqual({x: 1});
+    });
+
+
+    it('should append extra columns', function () {
+        const options = new TableRenderOptions({
+            columns: [{name: 'name', title: 'name'}, {name: 'id', title: 'id'}],
+            extraColumns: [{name: 'actions', title: 'Actions'}, {name: 'total', title: 'Total'}]
+        });
+        const columns = options.getProperties([]);
+        expect(columns).toHaveLength(4);
+        expect(columns[0].getName()).toEqual('name');
+        expect(columns[1].getName()).toEqual('id');
+        expect(columns[2].getName()).toEqual('actions');
+        expect(columns[3].getName()).toEqual('total');
+    });
+
+    it('should append extra columns when columns extracted from data', function () {
+        const options = new TableRenderOptions({
+            extraColumns: [{name: 'actions', title: 'Actions'}, {name: 'total', title: 'Total'}]
+        });
+        const columns = options.getProperties([
+            {id: '1', name: 'Ali'}
+        ]);
+        expect(columns).toHaveLength(4);
+        expect(columns[0].getName()).toEqual('id');
+        expect(columns[1].getName()).toEqual('name');
+        expect(columns[2].getName()).toEqual('actions');
+        expect(columns[3].getName()).toEqual('total');
     });
 
 });

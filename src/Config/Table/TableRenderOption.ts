@@ -1,9 +1,14 @@
-import { BaseCollectionRenderOptions, CollectionRenderOptionsConfig } from "../CollectionRenderOptions";
-import { Column, ColumnConfig } from "./Column";
+import {BaseCollectionRenderOptions, CollectionRenderOptionsConfig} from "../CollectionRenderOptions";
+import {Column, ColumnConfig} from "./Column";
+import {ColumnOrder} from "./ColumnOrder";
 
 
 export interface TableRenderOptionsConfig extends CollectionRenderOptionsConfig {
     columns?: ColumnConfig[];
+    extraColumns?: ColumnConfig[];
+
+    orderBy?: string[] | ((columns: Column[]) => string[]);
+
     titleMap?: { [name: string]: string };
     overrideColumns?: { [name: string]: ColumnConfig };
 
@@ -39,7 +44,20 @@ export class TableRenderOptions extends BaseCollectionRenderOptions<Column, Tabl
             return;
         }
 
-        this.columns = this.config.columns.map(columnConfig => new Column(columnConfig));
+        this.columns = this.config.columns.map(columnConfig => new Column(columnConfig))
+            .concat(this.getExtraColumns());
+    }
+
+    protected getExtraColumns(): Column[] {
+        if (this.config.extraColumns) {
+            const columns: Column[] = [];
+            for (let extraColumn of this.config.extraColumns) {
+                columns.push(new Column(extraColumn));
+            }
+            return columns;
+        }
+
+        return [];
     }
 
     getProperties(data: any): Column[] {
@@ -63,10 +81,13 @@ export class TableRenderOptions extends BaseCollectionRenderOptions<Column, Tabl
                 return;
             }
             let title = nameMap[key] ?? key;
-            columns.push(new Column({ name: key, title: title }));
+            columns.push(new Column({name: key, title: title}));
         });
-        return columns;
+
+        const allColumns = columns.concat(this.getExtraColumns());
+        return new ColumnOrder(allColumns, this.config.orderBy).order();
     }
+
 
     public getHeaderRowClassName(): string {
         return this.config.headerRowClassName ?? '';
@@ -97,6 +118,7 @@ export class TableRenderOptions extends BaseCollectionRenderOptions<Column, Tabl
         return '';
     }
 
+    // noinspection JSUnusedLocalSymbols
     public getCellProps(item: any, index: number): any {
         return this.config.cellProps ?? {};
     }
