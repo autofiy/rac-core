@@ -18,13 +18,12 @@ export class AxiosDataSource<T = any> implements DataSource<T, AxiosFetchOption>
 
     getData(): Promise<any> {
         return new Promise<T[]>((resolve, reject) => {
-
             const url = this.options.url;
             const axiosDataRequest = this.options.axiosDataRequest;
             const axiosRequestConfig = this.options.config;
 
             this.getPromise(url , axiosDataRequest , axiosRequestConfig)
-                .then((response: AxiosResponse) => setTimeout(() => resolve(this.getDataFromResponse(response)), 2000))
+                .then((response: AxiosResponse) => resolve(this.getDataFromResponse(response)))
                 .catch((e: any) => reject(e))
         });
     }
