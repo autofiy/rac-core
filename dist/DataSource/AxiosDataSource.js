@@ -10,7 +10,7 @@ var AxiosDataSource = /** @class */ (function () {
             var axiosDataRequest = _this.options.axiosDataRequest;
             var axiosRequestConfig = _this.options.config;
             _this.getPromise(url, axiosDataRequest, axiosRequestConfig)
-                .then(function (response) { return setTimeout(function () { return resolve(_this.getDataFromResponse(response)); }, 2000); })
+                .then(function (response) { return resolve(_this.getDataFromResponse(response)); })
                 .catch(function (e) { return reject(e); });
         });
     };
