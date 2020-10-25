@@ -1,4 +1,4 @@
-import {DataSource} from "./DataSource";
+import {DataSource} from "../../DataSource/DataSource";
 import Axios, {AxiosPromise, AxiosRequestConfig, AxiosResponse} from "axios";
 
 export interface AxiosFetchOption {

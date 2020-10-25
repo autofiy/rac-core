@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SimpleTableExample from "./example/SimpleTableExample";
-import SimpleTableContainerExample from "./example/SimpleTableContainerExample";
+import SimpleTableExample from "./old/example/SimpleTableExample";
+import SimpleTableContainerExample from "./old/example/SimpleTableContainerExample";
 
 
 ReactDOM.render(

@@ -35,7 +35,6 @@ export interface CollectionRenderOptions<P extends Property> {
 
     getWrapperProps(): any;
 
-
     getCollectionProps(): any;
 
     getCollectionClassName(): string;

@@ -1,4 +1,4 @@
-import {SimpleDataSource} from "../../DataSource/DataSource";
+import {SimpleDataSource} from "../../../DataSource/DataSource";
 
 describe('SimpleDataSource', () => {
 

@@ -1,5 +1,5 @@
 import React from "react";
-import {DataSource} from "../DataSource/DataSource";
+import {DataSource} from "../../DataSource/DataSource";
 import {KeyExtractor} from "../KeyExtractor/KeyExtractor";
 import {BaseCollectionRenderOptions} from "../Config/CollectionRenderOptions";
 
@@ -74,7 +74,6 @@ export abstract class BaseCollectionContainer<Props extends BaseCollectionContai
             });
     }
 
-
     render(): any {
         if (this.state.loading)
             return this.renderLoading();
@@ -104,7 +103,6 @@ export abstract class BaseCollectionContainer<Props extends BaseCollectionContai
     }
 
     public abstract renderCollection(): any;
-
 
     public appendItemAt = (index: number, item: any) => {
         const data = [...this.state.data];
