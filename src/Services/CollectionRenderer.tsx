@@ -1,4 +1,4 @@
-import {IAutoCollection} from "../IAutoCollection";
+import {IAutoCollection} from "../AutoCollection/IAutoCollection";
 
 export interface CollectionRenderer<Options> {
 
@@ -20,7 +20,7 @@ export abstract class CollectionRendererBase<Options> implements CollectionRende
     }
 
     protected getOptions(): Options {
-        return this.autoCollection.getProps().extra?.renderOptions;
+        return this.autoCollection.getProps().extra?.renderOptions ?? {};
     }
 
     abstract render(): any;

@@ -1,5 +1,6 @@
-import {DataSource} from "../../DataSource/DataSource";
 import Axios, {AxiosPromise, AxiosRequestConfig, AxiosResponse} from "axios";
+
+type DataSource = any;
 
 export interface AxiosFetchOption {
     url: string;
@@ -9,7 +10,7 @@ export interface AxiosFetchOption {
     extractDataFromResponse?: (response: AxiosResponse) => any;
 }
 
-export class AxiosDataSource<T = any> implements DataSource<T, AxiosFetchOption> {
+export class AxiosDataSource<T = any> implements DataSource {
     private readonly options: AxiosFetchOption;
 
     constructor(options: AxiosFetchOption) {

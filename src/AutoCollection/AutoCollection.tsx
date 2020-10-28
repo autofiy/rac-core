@@ -1,23 +1,23 @@
 import React, {Component} from "react";
-import {
-    AutoCollectionData,
-    AutoCollectionEvent,
-    AutoCollectionProps,
-    AutoCollectionState,
-    IAutoCollection
-} from "./IAutoCollection";
-import {CollectionRenderer} from "./Services/CollectionRenderer";
-import {SimpleCollectionRenderer} from "./Services/SimpleCollectionRenderer";
-import {AutoCollectionDefault} from "./AutoCollectionDefault";
+import {IAutoCollection} from "./IAutoCollection";
+import {CollectionRenderer} from "../Services/CollectionRenderer";
+import {AutoCollectionDefault} from "../AutoCollectionDefault";
+import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
+import {AutoCollectionEvent} from "./AutoCollectionEvent";
+import {AutoCollectionData} from "./AutoCollectionData";
+import {DataFetcher} from "../Services/Fetcher/DataFetcher";
+import {getService} from "./AutoCollectionService";
 
 export class AutoCollection extends Component<AutoCollectionProps, AutoCollectionState> implements IAutoCollection {
 
     private readonly renderService: CollectionRenderer<any>;
-
+    private readonly fetcherService: DataFetcher<any>;
 
     constructor(props: AutoCollectionProps) {
         super(props);
-        this.renderService = new SimpleCollectionRenderer(this);
+
+        this.fetcherService = getService<DataFetcher<any>>("fetcher", this);
+        this.renderService = getService<CollectionRenderer<any>>("renderer", this);
 
         this.state = {
             data: AutoCollectionDefault.initialData,
@@ -27,15 +27,11 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
     }
 
     componentDidMount() {
-        const {fetcher} = this.props;
-        this.setState({loading: true, data: AutoCollectionDefault.initialData, error: null});
-        fetcher.fetch()
-            .then(response => {
-                const customState = this.props.extra?.customStateFromResponse ?? AutoCollectionDefault.customStateFromResponse;
-                return customState(response);
-            })
-            .then(state => this.setState(state))
-            .catch(error => this.setState({error: error, loading: false, data: AutoCollectionDefault.initialData}));
+        this.fetchData();
+    }
+
+    private fetchData(): void {
+        this.fetcherService.fetch();
     }
 
     render() {
@@ -71,6 +67,9 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         return this.state;
     }
 
+    refreshData(): void {
+
+    }
 
     updateConfiguration(configuration: Partial<AutoCollectionState>, afterChange?: () => void) {
         return this.setState(configuration as any, afterChange);

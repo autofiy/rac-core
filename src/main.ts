@@ -1,6 +1,5 @@
 export * from "./old/KeyExtractor/KeyExtractor";
 export * from "./old/DataSource/AxiosDataSource";
-export * from "./DataSource/DataSource";
 export * from "./old/Container/CollectionContainer";
 export * from "./old/Container/SimpleTableContainer";
 export * from "./old/Container/CollectionContainer";

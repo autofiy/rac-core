@@ -1,8 +1,8 @@
 import {Column} from "../../../Config/Table/Column";
-import {ColumnOrder} from "../../../Config/Table/ColumnOrder";
+import {PropertyOrder} from "../../../../Property/PropertyOrder";
 
 describe('ColumnOrder', () => {
-    it('should order columns using orderBy as string[]', function () {
+    it('should order properties using orderBy as string[]', function () {
         const columns = [
             new Column({name: 'id', title: 'Id'}),
             new Column({name: 'name', title: 'Name'}),
@@ -10,7 +10,7 @@ describe('ColumnOrder', () => {
             new Column({name: 'phone', title: 'Phone'}),
         ];
         const orderBy = ['name', 'phone', 'email', 'id'];
-        const order = new ColumnOrder(columns, orderBy);
+        const order = new PropertyOrder(columns, orderBy);
         const orderedColumns = order.order();
 
         expect(orderedColumns[0].getName()).toEqual('name');
@@ -20,7 +20,7 @@ describe('ColumnOrder', () => {
     });
 
 
-    it('should order columns using orderBy as function', function () {
+    it('should order properties using orderBy as function', function () {
         const columns = [
             new Column({name: 'id', title: 'Id'}),
             new Column({name: 'name', title: 'Name'}),
@@ -29,7 +29,7 @@ describe('ColumnOrder', () => {
         ];
 
         const orderBy = () => ['name', 'phone', 'email', 'id'];
-        const order = new ColumnOrder(columns, orderBy);
+        const order = new PropertyOrder(columns, orderBy);
         const orderedColumns = order.order();
 
         expect(orderedColumns[0].getName()).toEqual('name');
@@ -47,7 +47,7 @@ describe('ColumnOrder', () => {
         ];
 
         const orderBy = () => ['name', 'phone', 'not_exists_column', 'id'];
-        const order = new ColumnOrder(columns, orderBy);
+        const order = new PropertyOrder(columns, orderBy);
 
         expect(() => order.order()).toThrowError('Cannot find column not_exists_column');
 
@@ -61,7 +61,7 @@ describe('ColumnOrder', () => {
             new Column({name: 'phone', title: 'Phone'}),
         ];
 
-        const order = new ColumnOrder(columns, undefined);
+        const order = new PropertyOrder(columns, undefined);
         const orderedColumns = order.order();
         expect(orderedColumns[0].getName()).toEqual('id');
         expect(orderedColumns[1].getName()).toEqual('name');

@@ -25,7 +25,6 @@ export class SimpleProperty<P extends PropertyConfig> implements Property {
     getTitle(): string {
         return this.config.title;
     }
-
 }
 
 export interface CollectionRenderOptions<P extends Property> {

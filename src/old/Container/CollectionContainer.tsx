@@ -1,5 +1,4 @@
 import React from "react";
-import {DataSource} from "../../DataSource/DataSource";
 import {KeyExtractor} from "../KeyExtractor/KeyExtractor";
 import {BaseCollectionRenderOptions} from "../Config/CollectionRenderOptions";
 
@@ -25,7 +24,7 @@ export interface BaseCollectionContainerProps<RenderOptions extends BaseCollecti
     renderError?: (error: any) => any;
     renderLoading?: () => any;
 
-    dataSource: DataSource<any, any>;
+    dataSource: any;
 
     collectionOptions: RenderOptions;
     keyExtractor?: KeyExtractor;
@@ -62,12 +61,12 @@ export abstract class BaseCollectionContainer<Props extends BaseCollectionContai
         const {dataSource} = this.props;
         this.setState({loading: true, error: false});
         dataSource.getData()
-            .then(data => {
+            .then((data:any) => {
                 this.setState({loading: false, error: null, data: data});
                 if (this.props.onFetchDone)
                     this.props.onFetchDone(data);
             })
-            .catch(e => {
+            .catch((e:any) => {
                 this.setState({loading: false, error: e, data: []});
                 if (this.props.onFetchFail)
                     this.props.onFetchFail(e);

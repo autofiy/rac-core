@@ -1,6 +1,6 @@
 import {BaseCollectionRenderOptions, CollectionRenderOptionsConfig} from "../CollectionRenderOptions";
 import {Column, ColumnConfig} from "./Column";
-import {ColumnOrder} from "./ColumnOrder";
+import {PropertyOrder} from "../../../Property/PropertyOrder";
 
 
 export interface TableRenderOptionsConfig extends CollectionRenderOptionsConfig {
@@ -85,7 +85,8 @@ export class TableRenderOptions extends BaseCollectionRenderOptions<Column, Tabl
         });
 
         const allColumns = columns.concat(this.getExtraColumns());
-        return new ColumnOrder(allColumns, this.config.orderBy).order();
+        return null as any;
+        //return new PropertyOrder(allColumns, this.config.orderBy).order();
     }
 
 

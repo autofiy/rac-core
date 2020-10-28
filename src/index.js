@@ -1,15 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SimpleTableExample from "./old/example/SimpleTableExample";
-import SimpleTableContainerExample from "./old/example/SimpleTableContainerExample";
+import AutoCollectionExample from "./__example/AutoCollectionExample";
 
 
 ReactDOM.render(
     <React.StrictMode>
         <div>
-            <SimpleTableExample/>
-            <hr/>
-            <SimpleTableContainerExample/>
+            <AutoCollectionExample />
         </div>
     </React.StrictMode>,
     document.getElementById('root')

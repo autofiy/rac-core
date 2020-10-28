@@ -74,7 +74,7 @@ describe('TableRenderOptions', () => {
         expect(props).toEqual({x: 1});
     });
 
-    it('should return columns from config', function () {
+    it('should return properties from config', function () {
         const options = new TableRenderOptions({
             columns: [{name: 'name', title: 'name'}, {name: 'id', title: 'id'}]
         });
@@ -84,7 +84,7 @@ describe('TableRenderOptions', () => {
         expect(columns[1].getName()).toEqual('id');
     });
 
-    it('should extract columns from data and config', function () {
+    it('should extract properties from data and config', function () {
         const data = [
             {id: 1, name: 'ali', category: 'category', age: 19},
             {id: 1, name: 'ali', category: 'category', age: 19},
@@ -103,13 +103,13 @@ describe('TableRenderOptions', () => {
         expect(columns[3].getCellClassName(null, 0)).toEqual('age-cell');
     });
 
-    it('should return empty array for columns when data is empty and no columns config', function () {
+    it('should return empty array for properties when data is empty and no properties config', function () {
         const options = new TableRenderOptions({});
         const columns = options.getProperties([]);
         expect(columns).toEqual([]);
     });
 
-    it('should return empty array for columns when data is null and no columns config', function () {
+    it('should return empty array for properties when data is null and no properties config', function () {
         const options = new TableRenderOptions({});
         const columns = options.getProperties(null);
         expect(columns).toEqual([]);
@@ -137,7 +137,7 @@ describe('TableRenderOptions', () => {
     });
 
 
-    it('should append extra columns', function () {
+    it('should append extra properties', function () {
         const options = new TableRenderOptions({
             columns: [{name: 'name', title: 'name'}, {name: 'id', title: 'id'}],
             extraColumns: [{name: 'actions', title: 'Actions'}, {name: 'total', title: 'Total'}]
@@ -150,7 +150,7 @@ describe('TableRenderOptions', () => {
         expect(columns[3].getName()).toEqual('total');
     });
 
-    it('should append extra columns when columns extracted from data', function () {
+    it('should append extra properties when properties extracted from data', function () {
         const options = new TableRenderOptions({
             extraColumns: [{name: 'actions', title: 'Actions'}, {name: 'total', title: 'Total'}]
         });
