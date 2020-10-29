@@ -1,7 +1,7 @@
 import {Property} from "../Collection/CollectionProperties";
 import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {IAutoCollection} from "./IAutoCollection";
-import {CollectionRenderer} from "../Services/CollectionRenderer";
+import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 
 export interface PropertiesConfiguration {
     properties?: Property[];

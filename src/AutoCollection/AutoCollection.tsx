@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {IAutoCollection} from "./IAutoCollection";
-import {CollectionRenderer} from "../Services/CollectionRenderer";
+import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 import {AutoCollectionDefault} from "../AutoCollectionDefault";
 import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
 import {AutoCollectionEvent} from "./AutoCollectionEvent";

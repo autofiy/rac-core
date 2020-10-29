@@ -1,6 +1,6 @@
 import {BaseCollectionRenderOptions, CollectionRenderOptionsConfig} from "../CollectionRenderOptions";
 import {Column, ColumnConfig} from "./Column";
-import {PropertyOrder} from "../../../Property/PropertyOrder";
+import {PropertyOrder} from "../../../Services/PropertyServices/PropertyOrder";
 
 
 export interface TableRenderOptionsConfig extends CollectionRenderOptionsConfig {

@@ -1,5 +1,5 @@
 import {Column} from "../../../Config/Table/Column";
-import {PropertyOrder} from "../../../../Property/PropertyOrder";
+import {PropertyOrder} from "../../../../Services/PropertyServices/PropertyOrder";
 
 describe('ColumnOrder', () => {
     it('should order properties using orderBy as string[]', function () {

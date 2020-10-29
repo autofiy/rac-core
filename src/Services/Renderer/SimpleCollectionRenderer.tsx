@@ -1,7 +1,7 @@
 import {CollectionRendererBase} from "./CollectionRenderer";
 import React from "react";
-import {AutoCollectionDefault} from "../AutoCollectionDefault";
-import {IAutoCollection} from "../AutoCollection/IAutoCollection";
+import {AutoCollectionDefault} from "../../AutoCollectionDefault";
+import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 
 export interface SimpleCollectionRenderOption {
     renderCollectionOnError?: boolean;

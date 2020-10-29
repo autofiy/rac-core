@@ -1,8 +1,8 @@
 import React from "react";
 import {AutoCollectionState} from "./AutoCollection/AutoCollectionProps";
 import {DataFetcher} from "./Services/Fetcher/DataFetcher";
-import {CollectionRenderer} from "./Services/CollectionRenderer";
-import {SimpleCollectionRenderer} from "./Services/SimpleCollectionRenderer";
+import {CollectionRenderer} from "./Services/Renderer/CollectionRenderer";
+import {SimpleCollectionRenderer} from "./Services/Renderer/SimpleCollectionRenderer";
 import {IAutoCollection} from "./AutoCollection/IAutoCollection";
 import {DirectDataFetcher} from "./Services/Fetcher/DirectDataFetcher";
 

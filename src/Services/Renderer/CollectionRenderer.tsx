@@ -1,4 +1,4 @@
-import {IAutoCollection} from "../AutoCollection/IAutoCollection";
+import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 
 export interface CollectionRenderer<Options> {
 
