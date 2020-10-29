@@ -1,13 +1,16 @@
-import {Property} from "../Collection/CollectionProperties";
 import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {IAutoCollection} from "./IAutoCollection";
 import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
+import {Property} from "../Services/PropertyServices/PropertyGenerator";
 
 export interface PropertiesConfiguration {
     properties?: Property[];
     titles?: { [name: string]: string };
     extraProperties?: Property[];
     orderBy?: string[] | ((properties: Property[]) => string[]);
+    render?: {
+        [name: string]: (property: Property, autoCollection: IAutoCollection) => any;
+    }
 }
 
 export interface AutoCollectionPropsExtra {

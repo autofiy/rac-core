@@ -1,5 +1,4 @@
 import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
-import {AutoCollectionData} from "./AutoCollectionData";
 import {AutoCollectionEvent} from "./AutoCollectionEvent";
 
 export interface IAutoCollection {
@@ -8,8 +7,6 @@ export interface IAutoCollection {
     getProps(): AutoCollectionProps;
 
     event(): AutoCollectionEvent;
-
-    data(): AutoCollectionData;
 
     refreshData(): void;
 

@@ -4,7 +4,6 @@ import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 import {AutoCollectionDefault} from "../AutoCollectionDefault";
 import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
 import {AutoCollectionEvent} from "./AutoCollectionEvent";
-import {AutoCollectionData} from "./AutoCollectionData";
 import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {getService} from "./AutoCollectionService";
 
@@ -42,10 +41,6 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         </div>
     }
 
-    data(): AutoCollectionData {
-        return null as any;
-    }
-
     event(): AutoCollectionEvent {
         return null as any;
     }
@@ -62,13 +57,12 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         return this.state.loading;
     }
 
-
     getConfiguration(): AutoCollectionState {
         return this.state;
     }
 
     refreshData(): void {
-
+        this.fetchData();
     }
 
     updateConfiguration(configuration: Partial<AutoCollectionState>, afterChange?: () => void) {
