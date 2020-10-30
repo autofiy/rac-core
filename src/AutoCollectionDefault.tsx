@@ -1,16 +1,14 @@
 import React from "react";
-import {AutoCollectionState, PropertiesConfiguration} from "./AutoCollection/AutoCollectionProps";
-import {DataFetcher} from "./Services/Fetcher/DataFetcher";
-import {CollectionRenderer} from "./Services/Renderer/CollectionRenderer";
+import {AutoCollectionState, PropertiesConfiguration, ServiceConfiguration} from "./AutoCollection/AutoCollectionProps";
 import {SimpleCollectionRenderer} from "./Services/Renderer/SimpleCollectionRenderer";
 import {IAutoCollection} from "./AutoCollection/IAutoCollection";
 import {DirectDataFetcher} from "./Services/Fetcher/DirectDataFetcher";
-import {PropertyGenerator, SmartPropertyGenerator} from "./Services/PropertyServices/PropertyGenerator";
-import {AutoCollectionConfigurationService} from "./Configuration/AutoCollectionConfiguration";
-import {DefaultAutoCollectionData} from "./Configuration/AutoCollectionData";
+import {SmartPropertyGenerator} from "./Services/PropertyServices/PropertyGenerator";
+import {DefaultAutoCollectionData} from "./Services/DataManager/DataManager";
+import {DefaultEventManager} from "./Services/EventManager/EventManager";
+import {IServiceProvider, ServiceProvider} from "./Services/Base/ServiceProvider";
 
 export interface IAutoCollectionDefault {
-    configurationService: AutoCollectionConfigurationService;
     defaultPropertiesConfiguration: PropertiesConfiguration;
     extractDataFromResponse: (response: Response) => Promise<any>;
     defaultHeaders: any;
@@ -22,12 +20,10 @@ export interface IAutoCollectionDefault {
     renderLoading: () => any;
     renderError: (error: any) => any;
 
+    serviceProvider: IServiceProvider;
 
-    services: {
-        fetcher: (autoCollection: IAutoCollection) => DataFetcher<any>,
-        renderer: (autoCollection: IAutoCollection) => CollectionRenderer<any>,
-        propertyGenerator: (autoCollection: IAutoCollection) => PropertyGenerator
-    }
+
+    services: ServiceConfiguration;
 
 
     initialData: any;
@@ -35,11 +31,7 @@ export interface IAutoCollectionDefault {
 
 export const AutoCollectionDefault: IAutoCollectionDefault = {
 
-    configurationService: {
-        data: autoCollection => new DefaultAutoCollectionData(autoCollection),
-        //todo : set DefaultAutoCollectionEvent
-        event: ac => null as any,
-    },
+    serviceProvider: new ServiceProvider(),
 
     defaultPropertiesConfiguration: {},
 
@@ -61,7 +53,10 @@ export const AutoCollectionDefault: IAutoCollectionDefault = {
     services: {
         fetcher: (ac: IAutoCollection) => new DirectDataFetcher(ac),
         renderer: (ac: IAutoCollection) => new SimpleCollectionRenderer(ac),
-        propertyGenerator: (ac: IAutoCollection) => new SmartPropertyGenerator(ac)
+        propertyGenerator: (ac: IAutoCollection) => new SmartPropertyGenerator(ac),
+        dataManager: ac => new DefaultAutoCollectionData(ac),
+        eventManager: ac => new DefaultEventManager(ac),
+
     },
 
     initialData: []

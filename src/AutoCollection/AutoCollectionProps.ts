@@ -1,22 +1,24 @@
-import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {IAutoCollection} from "./IAutoCollection";
-import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 import {Property, PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
-import {AutoCollectionConfigurationService} from "../Configuration/AutoCollectionConfiguration";
+import {ServiceCallback} from "../Services/Base/Service";
+import {DataFetcher} from "../Services/Fetcher/DataFetcher";
+import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
+import {DataManager} from "../Services/DataManager/DataManager";
+import {EventManager} from "../Services/EventManager/EventManager";
 
 export interface AutoCollectionProps {
-    configuration?: AutoCollectionConfigurationService;
     as: any;
-    extra?: AutoCollectionPropsExtra;
+    services?: Partial<ServiceConfiguration>;
     properties?: PropertiesConfiguration;
-    services?: AutoCollectionServices;
+    extra?: AutoCollectionPropsExtra;
 }
 
-export interface AutoCollectionPropsExtra {
-    dataSourceOptions?: any;
-    renderOptions?: any;
-
-    [propertyName: string]: any;
+export interface ServiceConfiguration {
+    fetcher: ServiceCallback<DataFetcher<any>>
+    renderer: ServiceCallback<CollectionRenderer<any>>,
+    propertyGenerator: ServiceCallback<PropertyGenerator>,
+    dataManager: ServiceCallback<DataManager>;
+    eventManager: ServiceCallback<EventManager>;
 }
 
 
@@ -30,12 +32,13 @@ export interface PropertiesConfiguration {
     }
 }
 
+export interface AutoCollectionPropsExtra {
+    dataSourceOptions?: any;
+    renderOptions?: any;
 
-export interface AutoCollectionServices {
-    fetcher?: (autoCollection: IAutoCollection) => DataFetcher<any>;
-    renderer?: (autoCollection: IAutoCollection) => CollectionRenderer<any>,
-    propertyGenerator?: (autoCollection: IAutoCollection) => PropertyGenerator,
+    [propertyName: string]: any;
 }
+
 
 export interface AutoCollectionState {
     data: any;

@@ -11,7 +11,7 @@ export interface PropertyOrderingFactory {
 
 export class DefaultPropertyOrderingFactory implements PropertyOrderingFactory {
 
-    private configuration: PropertiesConfiguration;
+    private readonly configuration: PropertiesConfiguration;
 
     constructor(configuration: PropertiesConfiguration) {
         this.configuration = configuration;

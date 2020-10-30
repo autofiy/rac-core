@@ -1,6 +1,6 @@
 import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
-import {AutoCollectionEvent} from "../Configuration/AutoCollectionEvent";
-import {AutoCollectionData} from "../Configuration/AutoCollectionData";
+import {EventManager} from "../Services/EventManager/EventManager";
+import {DataManager} from "../Services/DataManager/DataManager";
 import {PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
 
 export interface IAutoCollection {
@@ -11,7 +11,7 @@ export interface IAutoCollection {
 
     getProps(): AutoCollectionProps;
 
-    event(): AutoCollectionEvent;
+    event(): EventManager;
 
     refreshData(): void;
 
@@ -19,7 +19,7 @@ export interface IAutoCollection {
 
     getError(): any;
 
-    data(): AutoCollectionData;
+    data(): DataManager;
 
     updateConfiguration(state: Partial<AutoCollectionState>, afterChange?: () => void): void;
 

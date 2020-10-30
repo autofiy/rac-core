@@ -3,30 +3,29 @@ import {IAutoCollection} from "./IAutoCollection";
 import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 import {AutoCollectionDefault} from "../AutoCollectionDefault";
 import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
-import {AutoCollectionEvent} from "../Configuration/AutoCollectionEvent";
+import {EventManager} from "../Services/EventManager/EventManager";
 import {DataFetcher} from "../Services/Fetcher/DataFetcher";
-import {getService} from "./AutoCollectionService";
 import {PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
-import {AutoCollectionData} from "../Configuration/AutoCollectionData";
-import {getConfiguration} from "../Configuration/AutoCollectionConfiguration";
+import {DataManager} from "../Services/DataManager/DataManager";
+
 
 export class AutoCollection extends Component<AutoCollectionProps, AutoCollectionState> implements IAutoCollection {
 
     private readonly renderService: CollectionRenderer<any>;
     private readonly fetcherService: DataFetcher<any>;
     private readonly propertyGenerator: PropertyGenerator;
-
-    private readonly dataConfigurationService: AutoCollectionData;
-    private readonly eventConfigurationService: AutoCollectionEvent;
+    private readonly dataManager: DataManager;
+    private readonly eventManager: EventManager;
 
     constructor(props: AutoCollectionProps) {
         super(props);
-        this.fetcherService = getService<DataFetcher<any>>("fetcher", this);
-        this.renderService = getService<CollectionRenderer<any>>("renderer", this);
-        this.propertyGenerator = getService<PropertyGenerator>("propertyGenerator", this);
 
-        this.dataConfigurationService = getConfiguration<AutoCollectionData>("data", this);
-        this.eventConfigurationService = getConfiguration<AutoCollectionEvent>("event", this);
+        const serviceProvider = AutoCollectionDefault.serviceProvider;
+        this.fetcherService = serviceProvider.getService<DataFetcher<any>>("fetcher", this);
+        this.renderService = serviceProvider.getService<CollectionRenderer<any>>("renderer", this);
+        this.propertyGenerator = serviceProvider.getService<PropertyGenerator>("propertyGenerator", this);
+        this.dataManager = serviceProvider.getService<DataManager>("dataManager", this);
+        this.eventManager = serviceProvider.getService<EventManager>("eventManager", this);
 
         this.state = {
             data: AutoCollectionDefault.initialData,
@@ -55,12 +54,12 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         </div>
     }
 
-    event(): AutoCollectionEvent {
-        return this.eventConfigurationService;
+    event(): EventManager {
+        return this.eventManager;
     }
 
-    data(): AutoCollectionData {
-        return this.dataConfigurationService;
+    data(): DataManager {
+        return this.dataManager;
     }
 
     getProps(): AutoCollectionProps {
