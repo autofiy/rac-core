@@ -1,5 +1,7 @@
 import {PropertiesConfiguration} from "../../AutoCollection/AutoCollectionProps";
 import {PropertyOrder} from "./PropertyOrder";
+import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
+import {AutoCollectionDefault} from "../../AutoCollectionDefault";
 
 export interface Property {
     name: string;
@@ -13,12 +15,12 @@ export interface PropertyGenerator {
 
 export class SmartPropertyGenerator implements PropertyGenerator {
 
-    private readonly data: any[];
     private readonly configurations: PropertiesConfiguration;
+    private readonly autoCollection: IAutoCollection;
 
-    constructor(data: any[], configurations: PropertiesConfiguration) {
-        this.data = data;
-        this.configurations = configurations;
+    constructor(autoCollection: IAutoCollection) {
+        this.autoCollection = autoCollection;
+        this.configurations = autoCollection.getProps().properties ?? AutoCollectionDefault.defaultPropertiesConfiguration;
     }
 
     getOptions(): PropertiesConfiguration {
@@ -69,10 +71,11 @@ export class SmartPropertyGenerator implements PropertyGenerator {
 
 
     getRow(): any {
-        if (this.data.length === 0) {
+        let data = this.autoCollection.data().get();
+        if (!data || data.length === 0) {
             return {};
         }
-        return this.data[0];
+        return data[0];
     }
 
 }

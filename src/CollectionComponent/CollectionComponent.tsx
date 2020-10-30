@@ -27,7 +27,7 @@ export class CollectionComponentBase extends Component<Props> implements Collect
     }
 
     getProperties(): Property[] {
-        if (this.properties === null) {
+        if (this.properties === null || this.properties.length === 0) {
             this.properties = this.props.propertyGenerator.generate();
         }
         return this.properties;

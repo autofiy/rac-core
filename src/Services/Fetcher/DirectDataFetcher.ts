@@ -6,6 +6,7 @@ export class DirectDataFetcher extends DataFetcherBase<any> {
 
     public constructor(collection: IAutoCollection) {
         super(collection);
+        this.data = collection.getProps().extra?.dataSourceOptions?.data ?? [];
     }
 
     protected fetchData(): Promise<any> {

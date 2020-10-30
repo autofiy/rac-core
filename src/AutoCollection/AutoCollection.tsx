@@ -3,26 +3,40 @@ import {IAutoCollection} from "./IAutoCollection";
 import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 import {AutoCollectionDefault} from "../AutoCollectionDefault";
 import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
-import {AutoCollectionEvent} from "./AutoCollectionEvent";
+import {AutoCollectionEvent} from "../Configuration/AutoCollectionEvent";
 import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {getService} from "./AutoCollectionService";
+import {PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
+import {AutoCollectionData} from "../Configuration/AutoCollectionData";
+import {getConfiguration} from "../Configuration/AutoCollectionConfiguration";
 
 export class AutoCollection extends Component<AutoCollectionProps, AutoCollectionState> implements IAutoCollection {
 
     private readonly renderService: CollectionRenderer<any>;
     private readonly fetcherService: DataFetcher<any>;
+    private readonly propertyGenerator: PropertyGenerator;
+
+    private readonly dataConfigurationService: AutoCollectionData;
+    private readonly eventConfigurationService: AutoCollectionEvent;
 
     constructor(props: AutoCollectionProps) {
         super(props);
-
         this.fetcherService = getService<DataFetcher<any>>("fetcher", this);
         this.renderService = getService<CollectionRenderer<any>>("renderer", this);
+        this.propertyGenerator = getService<PropertyGenerator>("propertyGenerator", this);
+
+        this.dataConfigurationService = getConfiguration<AutoCollectionData>("data", this);
+        this.eventConfigurationService = getConfiguration<AutoCollectionEvent>("event", this);
 
         this.state = {
             data: AutoCollectionDefault.initialData,
             loading: false,
             error: null
         };
+    }
+
+    getPropertyGenerator(): PropertyGenerator {
+        return this.propertyGenerator;
     }
 
     componentDidMount() {
@@ -34,7 +48,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
     }
 
     render() {
-        return <div className={'rac-container'}>
+        return <div className={'__rac-container'}>
             {
                 this.renderService.render()
             }
@@ -42,7 +56,11 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
     }
 
     event(): AutoCollectionEvent {
-        return null as any;
+        return this.eventConfigurationService;
+    }
+
+    data(): AutoCollectionData {
+        return this.dataConfigurationService;
     }
 
     getProps(): AutoCollectionProps {

@@ -9,8 +9,8 @@ export interface ListItemRenderer {
 export class SimpleListRenderer implements ListItemRenderer {
 
     render(properties: Property[], item: any): any {
-        return properties.map(property => <div>
-            <b>{item[property.title]} : </b>
+        return properties.map((property, index) => <div key={index}>
+            <b>{property.title} : </b>
             <span>{item[property.name]}</span>
         </div>)
     }

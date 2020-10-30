@@ -54,6 +54,7 @@ export class TableBase extends CollectionComponentBase {
     }
 
     protected renderRows(): any {
+
         return this.getData().map(
             (item: any, index: number) =>
                 <tr key={index}>
