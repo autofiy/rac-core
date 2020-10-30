@@ -2,7 +2,7 @@ import {Component} from "react";
 import {Property, PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
 import {IAutoCollection} from "../AutoCollection/IAutoCollection";
 
-export interface Collection {
+export interface CollectionComponent {
     render(): any;
 
     getData(): any;
@@ -18,7 +18,7 @@ interface Props {
     autoCollection: IAutoCollection;
 }
 
-export class CollectionBase extends Component<Props> implements Collection {
+export class CollectionComponentBase extends Component<Props> implements CollectionComponent {
 
     private properties: Property[] | null = null;
 
