@@ -47,11 +47,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
     }
 
     render() {
-        return <div className={'__rac-container'}>
-            {
-                this.renderService.render()
-            }
-        </div>
+        return this.renderService.render();
     }
 
     event(): EventManager {
@@ -78,8 +74,11 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         return this.state;
     }
 
+
     refreshData(): void {
-        this.fetchData();
+        if (!this.isLoading()){
+            this.fetchData();
+        }
     }
 
     updateConfiguration(configuration: Partial<AutoCollectionState>, afterChange?: () => void) {

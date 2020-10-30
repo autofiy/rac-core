@@ -38,3 +38,10 @@ export class CollectionComponentBase extends Component<Props> implements Collect
     }
 
 }
+
+
+export class EmptyComponent extends CollectionComponentBase {
+    render() {
+        return null;
+    }
+}
