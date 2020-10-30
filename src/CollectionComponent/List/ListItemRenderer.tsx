@@ -14,5 +14,5 @@ export class SimpleListRenderer implements ListItemRenderer {
             <span>{item[property.name]}</span>
         </div>)
     }
-
+    
 }

@@ -31,11 +31,10 @@ export interface PropertiesConfiguration {
 }
 
 
-
 export interface AutoCollectionServices {
-    fetcher: (autoCollection: IAutoCollection) => DataFetcher<any>;
-    renderer: (autoCollection: IAutoCollection) => CollectionRenderer<any>,
-    propertyGenerator: (autoCollection: IAutoCollection) => PropertyGenerator,
+    fetcher?: (autoCollection: IAutoCollection) => DataFetcher<any>;
+    renderer?: (autoCollection: IAutoCollection) => CollectionRenderer<any>,
+    propertyGenerator?: (autoCollection: IAutoCollection) => PropertyGenerator,
 }
 
 export interface AutoCollectionState {

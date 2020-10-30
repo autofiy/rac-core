@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {AutoCollection} from "../AutoCollection/AutoCollection";
-import {TableBase} from "../CollectionComponent/Table/TableBase";
 import {ListBase} from "../CollectionComponent/List/ListBase";
+import {HttpDataFetcher} from "../Services/Fetcher/HttpDataFetcher";
 
 class AutoCollectionExample extends Component {
     render() {
@@ -14,9 +14,13 @@ class AutoCollectionExample extends Component {
         ];
         return (
             <div>
-                <AutoCollection as={ListBase} extra={{
-                    dataSourceOptions: {data: data}
-                }}/>
+                <AutoCollection as={ListBase}
+                                services={{fetcher: ac => new HttpDataFetcher(ac)}}
+                                extra={{
+                                    dataSourceOptions: {
+                                        url: 'http://localhost:9000/'
+                                    }
+                                }}/>
             </div>
         );
     }

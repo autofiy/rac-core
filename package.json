@@ -7,6 +7,7 @@
   "dependencies": {},
   "scripts": {
     "start": "react-scripts start",
+    "serve": "node ./test-server/server.js",
     "build": "tsc --noEmit false",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -39,8 +40,10 @@
     "async-wait-until": "^1.2.6",
     "axios": "^0.20.0",
     "axios-mock-adapter": "^1.18.2",
+    "cors": "^2.8.5",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
+    "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.3",

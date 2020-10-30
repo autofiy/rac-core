@@ -18,7 +18,7 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
 
     private readonly autoCollection: IAutoCollection;
 
-    protected constructor(collection: IAutoCollection) {
+    constructor(collection: IAutoCollection) {
         this.autoCollection = collection;
     }
 
