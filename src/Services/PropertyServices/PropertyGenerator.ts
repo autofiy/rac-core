@@ -1,7 +1,7 @@
 import {PropertiesConfiguration} from "../../AutoCollection/AutoCollectionProps";
 import {PropertyOrder} from "./PropertyOrder";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
-import {AutoCollectionDefault} from "../../AutoCollectionDefault";
+import {AutoCollectionDefault} from "../../Default/AutoCollectionDefault";
 
 export interface Property {
     name: string;

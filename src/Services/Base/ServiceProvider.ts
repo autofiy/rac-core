@@ -1,6 +1,6 @@
 import {ServiceConfiguration} from "../../AutoCollection/AutoCollectionProps";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
-import {AutoCollectionDefault} from "../../AutoCollectionDefault";
+import {ServiceDefault} from "../../Default/ServiceDefault";
 
 export interface IServiceProvider {
     getService<T = any>(key: keyof ServiceConfiguration, autoCollection: IAutoCollection): T;
@@ -12,7 +12,7 @@ export class ServiceProvider implements IServiceProvider {
         if (serviceCallback) {
             return serviceCallback(autoCollection);
         }
-        serviceCallback = AutoCollectionDefault.services[key];
+        serviceCallback = ServiceDefault[key];
         return serviceCallback(autoCollection);
     }
 }

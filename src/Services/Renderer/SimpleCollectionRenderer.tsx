@@ -1,6 +1,6 @@
 import {CollectionRendererBase} from "./CollectionRenderer";
 import React from "react";
-import {AutoCollectionDefault} from "../../AutoCollectionDefault";
+import {AutoCollectionDefault} from "../../Default/AutoCollectionDefault";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 
 export interface SimpleCollectionRenderOption {

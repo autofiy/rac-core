@@ -1,5 +1,5 @@
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
-import {AutoCollectionDefault} from "../../AutoCollectionDefault";
+import {AutoCollectionDefault} from "../../Default/AutoCollectionDefault";
 import {AutoCollectionState} from "../../AutoCollection/AutoCollectionProps";
 
 
@@ -8,7 +8,7 @@ export interface FetcherOptions {
 }
 
 export interface DataFetcher<Options extends FetcherOptions> {
-    fetch(): void;
+    fetch(): Promise<any>;
 
     getOptions(): Options;
 }
@@ -26,11 +26,18 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
         return this.autoCollection;
     }
 
-    fetch(): void {
+    fetch(): Promise<any> {
         this.startFetching();
-        this.fetchData()
-            .then(data => this.doneFetching(data))
-            .catch(error => this.errorFetching(error));
+        return new Promise<any>(async (resolve, reject) => {
+            try {
+                const data = await this.fetchData();
+                this.doneFetching(data);
+                resolve(data);
+            } catch (e) {
+                this.errorFetching(e)
+                reject(e);
+            }
+        })
     }
 
     protected abstract fetchData(): Promise<any>;

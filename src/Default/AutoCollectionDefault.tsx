@@ -1,12 +1,5 @@
 import React from "react";
-import {AutoCollectionState, PropertiesConfiguration, ServiceConfiguration} from "./AutoCollection/AutoCollectionProps";
-import {SimpleCollectionRenderer} from "./Services/Renderer/SimpleCollectionRenderer";
-import {IAutoCollection} from "./AutoCollection/IAutoCollection";
-import {DirectDataFetcher} from "./Services/Fetcher/DirectDataFetcher";
-import {SmartPropertyGenerator} from "./Services/PropertyServices/PropertyGenerator";
-import {DefaultAutoCollectionData} from "./Services/DataManager/DataManager";
-import {DefaultEventManager} from "./Services/EventManager/EventManager";
-import {IServiceProvider, ServiceProvider} from "./Services/Base/ServiceProvider";
+import {AutoCollectionState, PropertiesConfiguration} from "../AutoCollection/AutoCollectionProps";
 
 export interface IAutoCollectionDefault {
     defaultPropertiesConfiguration: PropertiesConfiguration;
@@ -16,22 +9,13 @@ export interface IAutoCollectionDefault {
     stateManipulator: (response: any) => AutoCollectionState;
     customStateFromResponse: (response: any) => Promise<AutoCollectionState>;
     httpMethod: string;
-
     renderLoading: () => any;
     renderError: (error: any) => any;
-
-    serviceProvider: IServiceProvider;
-
-
-    services: ServiceConfiguration;
-
-
     initialData: any;
 }
 
 export const AutoCollectionDefault: IAutoCollectionDefault = {
 
-    serviceProvider: new ServiceProvider(),
 
     defaultPropertiesConfiguration: {},
 
@@ -50,14 +34,6 @@ export const AutoCollectionDefault: IAutoCollectionDefault = {
     renderLoading: () => <h1>Loading...</h1>,
     renderError: error => <h1>Error : {error}</h1>,
 
-    services: {
-        fetcher: (ac: IAutoCollection) => new DirectDataFetcher(ac),
-        renderer: (ac: IAutoCollection) => new SimpleCollectionRenderer(ac),
-        propertyGenerator: (ac: IAutoCollection) => new SmartPropertyGenerator(ac),
-        dataManager: ac => new DefaultAutoCollectionData(ac),
-        eventManager: ac => new DefaultEventManager(ac),
-
-    },
 
     initialData: []
 };

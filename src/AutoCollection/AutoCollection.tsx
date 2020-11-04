@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import {IAutoCollection} from "./IAutoCollection";
 import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
-import {AutoCollectionDefault} from "../AutoCollectionDefault";
+import {AutoCollectionDefault} from "../Default/AutoCollectionDefault";
 import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
 import {EventManager} from "../Services/EventManager/EventManager";
 import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
 import {DataManager} from "../Services/DataManager/DataManager";
+import {ServiceDefault} from "../Default/ServiceDefault";
 
 
 export class AutoCollection extends Component<AutoCollectionProps, AutoCollectionState> implements IAutoCollection {
@@ -20,7 +21,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
     constructor(props: AutoCollectionProps) {
         super(props);
 
-        const serviceProvider = AutoCollectionDefault.serviceProvider;
+        const serviceProvider = ServiceDefault.serviceProvider(this);
         this.fetcherService = serviceProvider.getService<DataFetcher<any>>("fetcher", this);
         this.renderService = serviceProvider.getService<CollectionRenderer<any>>("renderer", this);
         this.propertyGenerator = serviceProvider.getService<PropertyGenerator>("propertyGenerator", this);
@@ -43,6 +44,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
     }
 
     private fetchData(): void {
+        // noinspection JSIgnoredPromiseFromCall
         this.fetcherService.fetch();
     }
 
@@ -76,7 +78,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
 
 
     refreshData(): void {
-        if (!this.isLoading()){
+        if (!this.isLoading()) {
             this.fetchData();
         }
     }

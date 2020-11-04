@@ -1,5 +1,5 @@
 import {DataFetcherBase, FetcherOptions} from "./DataFetcher";
-import {AutoCollectionDefault} from "../../AutoCollectionDefault";
+import {AutoCollectionDefault} from "../../Default/AutoCollectionDefault";
 
 export interface HttpDataFetcherOptions extends FetcherOptions {
     url: string;
@@ -20,31 +20,21 @@ export class HttpDataFetcher extends DataFetcherBase<HttpDataFetcherOptions> {
             return customFetch();
         }
         const url = this.getOptions().url;
-        return this.sendPromise(url);
+        return this.send(url);
     }
 
-    private sendPromise(url: string) {
-        return new Promise<any>(async (resolve, reject) => {
-            try {
-                const data = await this.send(url);
-                resolve(data);
-            } catch (e) {
-                reject(e);
-            }
-        })
-    }
+
 
     private async send(url: string) {
-        const response = await fetch(url, {
+        const extractData = this.getOptions().extractDataFromResponse ?? AutoCollectionDefault.extractDataFromResponse;
+        return fetch(url, {
             ...AutoCollectionDefault.otherHttpRequestOptions,
             method: this.getOptions().method ?? AutoCollectionDefault.httpMethod,
             body: this.getOptions().body
             ,
             headers: this.getOptions().headers ?? AutoCollectionDefault.defaultHeaders,
             ...this.getOptions().fetchInitOptions,
-        });
-        const extractData = this.getOptions().extractDataFromResponse ?? AutoCollectionDefault.extractDataFromResponse;
-        return await extractData(response);
+        }).then(data => extractData(data));
     }
-    
+
 }
