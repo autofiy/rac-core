@@ -15,10 +15,10 @@ TESTS :
         DataManager
         EventManager
         
-        DirectFetcher
-        HttpFetcher
+        DirectFetcher                   DONE
+        HttpFetcher                     DONE
         
-        SmartPropertyGenerator
+        SmartPropertyGenerator          DONE
         NoOrdering
         CustomOrdering
         SimpleOrdering

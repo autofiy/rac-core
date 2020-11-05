@@ -47,7 +47,7 @@ export abstract class PropertyGeneratorBase implements PropertyGenerator {
 
     protected getRow(): any {
         let data = this.autoCollection.data().get();
-        if (!data || data.length === 0) {
+        if (!data || !Array.isArray(data) || data.length === 0) {
             return {};
         }
         return data[0];
@@ -69,6 +69,5 @@ export class SmartPropertyGenerator extends PropertyGeneratorBase {
             new OrderingPropertyMiddleware(orderingFactory.getOrdering()),
         ];
     }
-
 
 }
