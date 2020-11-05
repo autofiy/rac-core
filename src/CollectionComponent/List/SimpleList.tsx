@@ -2,7 +2,7 @@ import {CollectionComponentBase} from "../CollectionComponent";
 import React from "react";
 import {ListItemRenderer, SimpleListRenderer} from "./ListItemRenderer";
 
-export class ListBase extends CollectionComponentBase {
+export class SimpleList extends CollectionComponentBase {
 
     private readonly itemRenderer: ListItemRenderer;
 

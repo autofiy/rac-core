@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {AutoCollection} from "../AutoCollection/AutoCollection";
-import {ListBase} from "../CollectionComponent/List/ListBase";
+import {SimpleList} from "../CollectionComponent/List/SimpleList";
 import {HttpDataFetcher} from "../Services/Fetcher/HttpDataFetcher";
 
 class AutoCollectionExample extends Component {
@@ -14,7 +14,7 @@ class AutoCollectionExample extends Component {
         ];
         return (
             <div>
-                <AutoCollection as={ListBase}
+                <AutoCollection as={SimpleList}
                                 services={{fetcher: ac => new HttpDataFetcher(ac)}}
                                 extra={{
                                     dataSourceOptions: {

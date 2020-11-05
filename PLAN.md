@@ -6,3 +6,29 @@ EVENTS :
     - ITEM_REMOVED
     - ITEM_ADDED
     _ ITEM_MODIFIED
+    
+    
+    
+TESTS : 
+
+    Services :
+        DataManager
+        EventManager
+        
+        DirectFetcher
+        HttpFetcher
+        
+        SmartPropertyGenerator
+        NoOrdering
+        CustomOrdering
+        SimpleOrdering
+        
+        SimpleCollectionRenderer
+        
+        
+        CollectionComponent
+        SimpleTable
+        CellRenderer
+        SimpleList
+        ListItemRenderer
+        

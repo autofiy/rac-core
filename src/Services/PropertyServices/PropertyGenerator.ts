@@ -1,7 +1,12 @@
 import {PropertiesConfiguration} from "../../AutoCollection/AutoCollectionProps";
-import {PropertyOrder} from "./PropertyOrder";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 import {AutoCollectionDefault} from "../../Default/AutoCollectionDefault";
+import {PropertyGeneratorMiddleware} from "./Middleware/PropertyGeneratorMiddleware";
+import {PassedPropertiesMiddleware} from "./Middleware/PassedPropertiesMiddleware";
+import {TitleMapperPropertyMiddleware} from "./Middleware/TitleMapperPropertyMiddleware";
+import {ExtraPropertiesMiddleware} from "./Middleware/ExtraPropertiesMiddleware";
+import {OrderingPropertyMiddleware} from "./Middleware/OrderingPropertyMiddleware";
+import {DefaultPropertyOrderingFactory} from "./Middleware/Order/PropertyOrderingFactory";
 
 export interface Property {
     name: string;
@@ -12,70 +17,58 @@ export interface PropertyGenerator {
     generate(): Property[];
 }
 
-
-export class SmartPropertyGenerator implements PropertyGenerator {
+export abstract class PropertyGeneratorBase implements PropertyGenerator {
 
     private readonly configurations: PropertiesConfiguration;
     private readonly autoCollection: IAutoCollection;
 
-    constructor(autoCollection: IAutoCollection) {
+    public constructor(autoCollection: IAutoCollection) {
         this.autoCollection = autoCollection;
         this.configurations = autoCollection.getProps().properties ?? AutoCollectionDefault.defaultPropertiesConfiguration;
     }
 
-    getOptions(): PropertiesConfiguration {
+    protected getOptions(): PropertiesConfiguration {
         return this.configurations;
     }
 
     generate(): Property[] {
-        let passedProperties = this.getOptions().properties;
-        if (passedProperties) {
-            return passedProperties;
-        }
-        return this.smartGenerate();
-    }
-
-    private smartGenerate() {
-        const someRow = this.getRow();
-        let properties = this.mapTitles(someRow);
-        properties = this.appendExtra(properties);
-        return this.order(properties)
-    }
-
-    private mapTitles(data: any) {
-        const keys = Object.keys(data);
-        const options = this.getOptions();
-        const properties: Property[] = [];
-        keys.forEach(key => {
-            const property = {title: key, name: key};
-            if (options.titles?.[key]) {
-                property.title = options.titles?.[key];
+        const middlewareArr = this.getMiddlewareArray();
+        let data: Property[] = [];
+        for (let middleware of middlewareArr) {
+            const result = middleware.handle(data);
+            data = result.data;
+            if (result.break) {
+                break;
             }
-            properties!.push(property);
-        });
-        return properties;
-    }
-
-    private order(properties: Property[]) {
-        let orderService = new PropertyOrder(properties, this.getOptions().orderBy);
-        return orderService.order();
-    }
-
-    private appendExtra(properties: Property[]) {
-        const options = this.getOptions();
-        if (options.extraProperties) {
-            return properties.concat(options.extraProperties);
         }
-        return properties;
+        return data;
     }
 
 
-    getRow(): any {
+    protected getRow(): any {
         let data = this.autoCollection.data().get();
         if (!data || data.length === 0) {
             return {};
         }
         return data[0];
     }
+
+    protected abstract getMiddlewareArray(): PropertyGeneratorMiddleware[];
+
+}
+
+export class SmartPropertyGenerator extends PropertyGeneratorBase {
+
+    protected getMiddlewareArray(): PropertyGeneratorMiddleware[] {
+        const configuration = this.getOptions();
+        const orderingFactory = new DefaultPropertyOrderingFactory(configuration);
+        return [
+            new PassedPropertiesMiddleware(configuration),
+            new TitleMapperPropertyMiddleware(this.getRow(), configuration),
+            new ExtraPropertiesMiddleware(configuration),
+            new OrderingPropertyMiddleware(orderingFactory.getOrdering()),
+        ];
+    }
+
 
 }

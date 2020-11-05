@@ -3,7 +3,7 @@ import React from "react";
 import {CellRenderer, SimpleBodyCellRenderer, SimpleHeaderCellRenderer} from "./CellRenderer";
 
 
-export class TableBase extends CollectionComponentBase {
+export class SimpleTable extends CollectionComponentBase {
 
     private readonly headerCellRenderer: CellRenderer;
     private readonly bodyCellRenderer: CellRenderer;

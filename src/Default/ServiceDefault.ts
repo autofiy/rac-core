@@ -8,6 +8,7 @@ import {DirectDataFetcher} from "../Services/Fetcher/DirectDataFetcher";
 import {SimpleCollectionRenderer} from "../Services/Renderer/SimpleCollectionRenderer";
 import {ServiceCallback} from "../Services/Base/Service";
 
+
 export const ServiceDefault: ServiceConfiguration & { serviceProvider: ServiceCallback<IServiceProvider> } = {
     fetcher: (ac: IAutoCollection) => new DirectDataFetcher(ac),
     renderer: (ac: IAutoCollection) => new SimpleCollectionRenderer(ac),
