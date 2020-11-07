@@ -26,7 +26,7 @@ export interface DataManager extends Service {
 }
 
 
-export class DefaultAutoCollectionData extends ServiceBase implements DataManager {
+export class DefaultDataManager extends ServiceBase implements DataManager {
 
     get(): any {
         return this.getAutoCollection().getState().data;
@@ -40,12 +40,12 @@ export class DefaultAutoCollectionData extends ServiceBase implements DataManage
         }, afterChange);
     }
 
-    clearFilter(): void {
+    clearFilter(afterChange?: () => any): void {
         const all = [...this.getAutoCollection().getState().all];
         this.getAutoCollection().updateState({
             data: all,
             filtered: false
-        });
+        }, afterChange);
         this.getAutoCollection().event().emit(EventType.DATA_FILTER_CLEARED, {});
     }
 
@@ -55,7 +55,7 @@ export class DefaultAutoCollectionData extends ServiceBase implements DataManage
         this.getAutoCollection().updateState({
             filtered: true,
             data: filteredData
-        });
+        }, afterChange);
         this.getAutoCollection().event().emit(EventType.DATA_FILTERED, filteredData);
     }
 
@@ -77,34 +77,35 @@ export class DefaultAutoCollectionData extends ServiceBase implements DataManage
         items.push(item);
         this.getAutoCollection().updateState({
             all: items
-        });
+        }, afterChange);
+        this.getAutoCollection().event().emit(EventType.ITEM_ADDED, {index: items.length - 1, item: item});
     }
 
     order(orderFunc: (items: any) => any[], afterChange?: () => any): void {
         const items = orderFunc(this.getAutoCollection().getState().data);
         this.getAutoCollection().updateState({
             data: items
-        });
+        }, afterChange);
         this.getAutoCollection().event().emit(EventType.DATA_REORDERED, items);
     }
 
-    removeAt(index: number): void {
+    removeAt(index: number, afterChange?: () => void): void {
         const items: any[] = [...this.getAutoCollection().getState().all];
         const removedItem = items[index];
         items.splice(index, 1);
         this.getAutoCollection().updateState({
             all: items
-        });
+        }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_REMOVED, removedItem);
     }
 
-    updateItemAt(index: number, newItem: any): void {
+    updateItemAt(index: number, newItem: any , afterChange? : () => void): void {
         const items = [...this.getAutoCollection().getState().all];
         const oldItem = items[index];
         items.splice(index, 1, newItem);
         this.getAutoCollection().updateState({
             all: items
-        });
+        }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_MODIFIED, {old: oldItem, new: newItem, index: index});
     }
 

@@ -1,14 +1,4 @@
 - SUPPORT PAGING
-
-EVENTS :
-    
-    - ITEM_REMOVED
-    - ITEM_ADDED
-    _ ITEM_MODIFIED
-    
-    - DATA_REORDERED
-    - DATA_FILTERED
-    
     
 TESTS : 
 

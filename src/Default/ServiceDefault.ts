@@ -1,6 +1,6 @@
 import {IAutoCollection} from "../AutoCollection/IAutoCollection";
 import {SmartPropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
-import {DefaultAutoCollectionData} from "../Services/DataManager/DataManager";
+import {DefaultDataManager} from "../Services/DataManager/DataManager";
 import {DefaultEventManager} from "../Services/EventManager/EventManager";
 import {ServiceConfiguration} from "../AutoCollection/AutoCollectionProps";
 import {IServiceProvider, ServiceProvider} from "../Services/Base/ServiceProvider";
@@ -13,7 +13,7 @@ export const ServiceDefault: ServiceConfiguration & { serviceProvider: ServiceCa
     fetcher: (ac: IAutoCollection) => new DirectDataFetcher(ac),
     renderer: (ac: IAutoCollection) => new SimpleCollectionRenderer(ac),
     propertyGenerator: (ac: IAutoCollection) => new SmartPropertyGenerator(ac),
-    dataManager: ac => new DefaultAutoCollectionData(ac),
+    dataManager: ac => new DefaultDataManager(ac),
     eventManager: ac => new DefaultEventManager(ac),
     serviceProvider: () => new ServiceProvider(),
 }
