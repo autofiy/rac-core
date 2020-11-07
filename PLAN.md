@@ -1,12 +1,13 @@
-EVENTS :
+- SUPPORT PAGING
 
-    - FETCHING_START
-    - FETCHING_DONE
-    - FETCHING_FAIL
+EVENTS :
+    
     - ITEM_REMOVED
     - ITEM_ADDED
     _ ITEM_MODIFIED
     
+    - DATA_REORDERED
+    - DATA_FILTERED
     
     
 TESTS : 
@@ -19,14 +20,15 @@ TESTS :
         HttpFetcher                     DONE
         
         SmartPropertyGenerator          DONE
-        NoOrdering
-        CustomOrdering
-        SimpleOrdering
+        NoOrdering                      DONE
+        CustomOrdering                  DONE
+        SimpleOrdering                  DONE
+        OrderingFactory                 DONE
         
-        SimpleCollectionRenderer
+        SimpleCollectionRenderer        DONE
         
         
-        CollectionComponent
+        CollectionComponent             DONE
         SimpleTable
         CellRenderer
         SimpleList

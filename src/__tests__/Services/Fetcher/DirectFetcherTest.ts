@@ -13,7 +13,7 @@ describe('DirectFetcher', () => {
         });
         const fetcher = new DirectDataFetcher(autoCollection);
         fetcher.fetch();
-        expect(autoCollection.updateConfiguration).not.toBeCalled();
+        expect(autoCollection.updateState).not.toBeCalled();
     });
 
     it('should not update state when fetch start', function () {
@@ -24,7 +24,7 @@ describe('DirectFetcher', () => {
         });
         const fetcher = new DirectDataFetcher(autoCollection);
         fetcher.fetch();
-        expect(autoCollection.updateConfiguration).not.toBeCalled();
+        expect(autoCollection.updateState).not.toBeCalled();
     });
 
 
@@ -44,7 +44,7 @@ describe('DirectFetcher', () => {
         const fetcher = new DirectDataFetcher(autoCollection);
         await fetcher.fetch();
 
-        expect(autoCollection.updateConfiguration).toBeCalledWith({
+        expect(autoCollection.updateState).toBeCalledWith({
             loading: false,
             error: null,
             data: data
@@ -61,7 +61,7 @@ describe('DirectFetcher', () => {
         const fetcher = new DirectDataFetcher(autoCollection);
         await fetcher.fetch();
 
-        expect(autoCollection.updateConfiguration).toBeCalledWith({
+        expect(autoCollection.updateState).toBeCalledWith({
             loading: false,
             error: null,
             data: []

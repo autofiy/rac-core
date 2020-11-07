@@ -13,7 +13,6 @@ export interface CollectionComponent {
 }
 
 interface Props {
-    data: any;
     propertyGenerator: PropertyGenerator;
     autoCollection: IAutoCollection;
 }
@@ -22,8 +21,12 @@ export class CollectionComponentBase extends Component<Props> implements Collect
 
     private properties: Property[] | null = null;
 
+    public render():any {
+        return null;
+    }
+
     getData(): any {
-        return this.props.data;
+        return this.getAutoCollection().data().get();
     }
 
     getProperties(): Property[] {

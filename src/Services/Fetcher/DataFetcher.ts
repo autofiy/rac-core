@@ -1,6 +1,7 @@
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 import {AutoCollectionDefault} from "../../Default/AutoCollectionDefault";
 import {AutoCollectionState} from "../../AutoCollection/AutoCollectionProps";
+import {EventType} from "../EventManager/EventType";
 
 
 export interface FetcherOptions {
@@ -47,7 +48,8 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
     }
 
     protected startFetching(): void {
-        this.getAutoCollection().updateConfiguration({
+        this.getAutoCollection().event().emit(EventType.FETCH_START, this.getOptions());
+        this.getAutoCollection().updateState({
             loading: true,
             error: null,
             data: AutoCollectionDefault.initialData
@@ -57,12 +59,15 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
     protected doneFetching(response: any): void {
         const stateManipulator = this.getOptions().stateManipulator ?? AutoCollectionDefault.stateManipulator;
         const state = stateManipulator(response);
-        this.getAutoCollection().updateConfiguration(state);
+        this.getAutoCollection().updateState(state, () => {
+            this.getAutoCollection().event().emit(EventType.FETCH_DONE, state.data);
+        });
     }
 
 
     protected errorFetching(error: any): void {
-        this.getAutoCollection().updateConfiguration({
+        this.getAutoCollection().event().emit(EventType.FETCH_FAIL, error);
+        this.getAutoCollection().updateState({
             loading: false,
             error: error,
             data: AutoCollectionDefault.initialData

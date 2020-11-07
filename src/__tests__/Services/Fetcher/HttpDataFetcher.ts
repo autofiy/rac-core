@@ -19,7 +19,7 @@ describe('HttpDataFetcher', () => {
         fetchMock.mockIf("*", responseMock);
         const fetcher = new HttpDataFetcher(autoCollection);
         fetcher.fetch();
-        expect(autoCollection.updateConfiguration).toBeCalledWith({
+        expect(autoCollection.updateState).toBeCalledWith({
             data: AutoCollectionDefault.initialData,
             loading: true,
             error: null
@@ -38,7 +38,7 @@ describe('HttpDataFetcher', () => {
         fetchMock.mockResponseOnce(JSON.stringify(response));
         const fetcher = new HttpDataFetcher(autoCollection);
         await fetcher.fetch();
-        expect(autoCollection.updateConfiguration.mock.calls).toEqual([
+        expect(autoCollection.updateState.mock.calls).toEqual([
             [{data: AutoCollectionDefault.initialData, loading: true, error: null}],
             [{data: response, loading: false, error: null}]
         ]);
@@ -57,7 +57,7 @@ describe('HttpDataFetcher', () => {
         try {
             await fetcher.fetch();
         } catch {
-            expect(autoCollection.updateConfiguration.mock.calls).toEqual([
+            expect(autoCollection.updateState.mock.calls).toEqual([
                 [{data: AutoCollectionDefault.initialData, loading: true, error: null}],
                 [{data: AutoCollectionDefault.initialData, loading: false, error: 'failure'}]
             ]);

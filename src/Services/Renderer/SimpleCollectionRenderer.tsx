@@ -36,7 +36,6 @@ export class SimpleCollectionRenderer extends CollectionRendererBase<SimpleColle
         return AutoCollectionDefault.renderLoading();
     }
 
-
     protected renderError(): any {
         let error = this.getAutoCollection().getError();
         if (error) {
@@ -69,7 +68,6 @@ export class SimpleCollectionRenderer extends CollectionRendererBase<SimpleColle
         </React.Fragment>
     }
 
-
     protected handlePositioning(loading: any, error: any, collection: any): any[] {
         const elements: any[] = [];
         const options = this.getOptions();
@@ -88,6 +86,5 @@ export class SimpleCollectionRenderer extends CollectionRendererBase<SimpleColle
         }
         return elements;
     }
-
 
 }

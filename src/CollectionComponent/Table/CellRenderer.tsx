@@ -44,7 +44,6 @@ export abstract class SimpleCellRendererBase extends CellRendererBase {
 
 }
 
-
 export class SimpleHeaderCellRenderer extends SimpleCellRendererBase {
 
     protected renderDefault(property: Property, data: any): any {

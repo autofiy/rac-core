@@ -29,6 +29,8 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         this.eventManager = serviceProvider.getService<EventManager>("eventManager", this);
 
         this.state = {
+            filtered : false,
+            all : AutoCollectionDefault.initialData,
             data: AutoCollectionDefault.initialData,
             loading: false,
             error: null
@@ -72,7 +74,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         return this.state.loading;
     }
 
-    getConfiguration(): AutoCollectionState {
+    getState(): AutoCollectionState {
         return this.state;
     }
 
@@ -83,8 +85,8 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         }
     }
 
-    updateConfiguration(configuration: Partial<AutoCollectionState>, afterChange?: () => void) {
-        return this.setState(configuration as any, afterChange);
+    updateState(state: Partial<AutoCollectionState>, afterChange?: () => void) {
+        return this.setState(state as any, afterChange);
     }
 
 

@@ -21,9 +21,9 @@ export interface IAutoCollection {
 
     data(): DataManager;
 
-    updateConfiguration(state: Partial<AutoCollectionState>, afterChange?: () => void): void;
+    updateState(state: Partial<AutoCollectionState>, afterChange?: () => void): void;
 
-    getConfiguration(): AutoCollectionState;
+    getState(): AutoCollectionState;
 }
 
 

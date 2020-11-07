@@ -5,7 +5,6 @@ import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 import {DataManager} from "../Services/DataManager/DataManager";
 import {EventManager} from "../Services/EventManager/EventManager";
-import {PropertyOrderingFactory} from "../Services/PropertyServices/Middleware/Order/PropertyOrderingFactory";
 
 export interface AutoCollectionProps {
     as: any;
@@ -42,6 +41,8 @@ export interface AutoCollectionPropsExtra {
 
 
 export interface AutoCollectionState {
+    filtered: boolean;
+    all: any;
     data: any;
     loading: boolean;
     error: any;
