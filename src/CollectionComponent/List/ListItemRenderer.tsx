@@ -6,13 +6,20 @@ export interface ListItemRenderer {
 }
 
 
-export class SimpleListRenderer implements ListItemRenderer {
+export class SimpleListItemRenderer implements ListItemRenderer {
 
     render(properties: Property[], item: any): any {
-        return properties.map((property, index) => <div key={index}>
-            <b>{property.title} : </b>
-            <span>{item[property.name]}</span>
-        </div>)
+        return <React.Fragment>
+            {
+                properties.map(
+                    (property, index) =>
+                        <div key={property.name}>
+                            <b>{property.title}</b>
+                            <span>{item[property.name]}</span>
+                        </div>
+                )
+            }
+        </React.Fragment>
     }
-    
+
 }

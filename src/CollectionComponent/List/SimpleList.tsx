@@ -1,11 +1,10 @@
 import {CollectionComponentBase} from "../CollectionComponent";
 import React from "react";
-import {ListItemRenderer, SimpleListRenderer} from "./ListItemRenderer";
+import {ListItemRenderer, SimpleListItemRenderer} from "./ListItemRenderer";
 
 export class SimpleList extends CollectionComponentBase {
 
     private readonly itemRenderer: ListItemRenderer;
-
 
     constructor(props: any) {
         super(props);
@@ -28,6 +27,6 @@ export class SimpleList extends CollectionComponentBase {
     }
 
     protected getItemRenderer(): ListItemRenderer {
-        return new SimpleListRenderer();
+        return new SimpleListItemRenderer();
     }
 }
