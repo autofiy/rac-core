@@ -27,8 +27,11 @@ export interface PropertiesConfiguration {
     titles?: { [name: string]: string };
     extraProperties?: Property[];
     orderBy?: string[] | ((properties: Property[]) => string[]);
-    render?: {
+    headerRender?: {
         [name: string]: (property: Property, autoCollection: IAutoCollection) => any;
+    },
+    render?: {
+        [name: string]: (property: Property, data: any, autoCollection: IAutoCollection) => any;
     }
 }
 

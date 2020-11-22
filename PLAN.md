@@ -3,8 +3,8 @@
 TESTS : 
 
     Services :
-        DataManager
-        EventManager
+        DataManager                     DONE
+        EventManager                    DONE
         
         DirectFetcher                   DONE
         HttpFetcher                     DONE
