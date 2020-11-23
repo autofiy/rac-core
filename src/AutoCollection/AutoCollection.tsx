@@ -35,6 +35,10 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
             loading: false,
             error: null
         };
+
+
+        const keys = Object.keys(props.on ?? {});
+        keys.forEach(key => this.event().addListener(key, props.on![key]));
     }
 
     getPropertyGenerator(): PropertyGenerator {
@@ -87,6 +91,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
     }
 
     updateState(state: Partial<AutoCollectionState>, afterChange?: () => void) {
+        console.log("UPDATE STATE"  , state);
         return this.setState(state as any, afterChange);
     }
 

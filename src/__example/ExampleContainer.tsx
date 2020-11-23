@@ -7,6 +7,7 @@ import TitlesExample from "./TitlesExample";
 import OrderExample from "./OrderExample";
 import ExtraPropertiesExample from "./ExtraPropertiesExample";
 import CustomCellExample from "./CustomCellExample";
+import FullUseExample from "./FullUseExample";
 
 export interface State {
     example?: string
@@ -53,6 +54,10 @@ class ExampleContainer extends Component<any, State> {
             case "custom-cell":
                 exampleComponent = <CustomCellExample/>;
                 break;
+
+            case "full-use":
+                exampleComponent = <FullUseExample/>;
+                break;
         }
 
         return (
@@ -69,6 +74,7 @@ class ExampleContainer extends Component<any, State> {
                     <button onClick={() => this.setExample("custom-cell")}>Custom Render Custom Render HeaderCell ,
                         BodyCell
                     </button>
+                    <button onClick={() => this.setExample("full-use")}>Full Use</button>
                 </div>
 
                 <br/>

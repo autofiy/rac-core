@@ -38,11 +38,11 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
                 }
             } catch (e) {
                 if (!this.shouldCancel) {
-                    this.errorFetching(e)
+                    this.errorFetching(e);
                     reject(e);
                 }
             }
-        })
+        });
     }
 
     getOptions(): Options {

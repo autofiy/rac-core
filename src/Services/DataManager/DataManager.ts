@@ -63,7 +63,8 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         const items: any[] = [...this.getAutoCollection().getState().all];
         items.splice(index, 0, item);
         this.getAutoCollection().updateState({
-            all: items
+            all: items,
+            data : items
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_ADDED, {index: index, item: item});
     }
@@ -76,7 +77,8 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         const items: any[] = [...this.getAutoCollection().getState().all];
         items.push(item);
         this.getAutoCollection().updateState({
-            all: items
+            all: items,
+            data : items
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_ADDED, {index: items.length - 1, item: item});
     }
@@ -84,7 +86,7 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
     order(orderFunc: (items: any) => any[], afterChange?: () => any): void {
         const items = orderFunc(this.getAutoCollection().getState().data);
         this.getAutoCollection().updateState({
-            data: items
+            data: items,
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.DATA_REORDERED, items);
     }
@@ -94,7 +96,8 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         const removedItem = items[index];
         items.splice(index, 1);
         this.getAutoCollection().updateState({
-            all: items
+            all: items,
+            data : items
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_REMOVED, removedItem);
     }
@@ -104,7 +107,8 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         const oldItem = items[index];
         items.splice(index, 1, newItem);
         this.getAutoCollection().updateState({
-            all: items
+            all: items,
+            data : items
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_MODIFIED, {old: oldItem, new: newItem, index: index});
     }

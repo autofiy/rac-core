@@ -12,6 +12,7 @@ export interface HttpDataFetcherOptions extends FetcherOptions {
     extractDataFromResponse?: (response: Response) => any;
 }
 
+
 export class HttpDataFetcher extends DataFetcherBase<HttpDataFetcherOptions> {
 
     protected fetchData(): Promise<any> {
@@ -29,8 +30,7 @@ export class HttpDataFetcher extends DataFetcherBase<HttpDataFetcherOptions> {
         return fetch(url, {
             ...AutoCollectionDefault.otherHttpRequestOptions,
             method: this.getOptions().method ?? AutoCollectionDefault.httpMethod,
-            body: this.getOptions().body
-            ,
+            body: this.getOptions().body,
             headers: this.getOptions().headers ?? AutoCollectionDefault.defaultHeaders,
             ...this.getOptions().fetchInitOptions,
         }).then(data => extractData(data));
