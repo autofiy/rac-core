@@ -21,7 +21,7 @@ export class CollectionComponentBase extends Component<Props> implements Collect
 
     private properties: Property[] | null = null;
 
-    public render():any {
+    public render(): any {
         return null;
     }
 
@@ -29,11 +29,15 @@ export class CollectionComponentBase extends Component<Props> implements Collect
         return this.getAutoCollection().data().get();
     }
 
+    private isDataReady(): boolean {
+        return this.getData().length > 0;
+    }
+
     getProperties(): Property[] {
-        if (this.properties === null || this.properties.length === 0) {
+        if (this.properties === null && this.isDataReady()) {
             this.properties = this.props.propertyGenerator.generate();
         }
-        return this.properties;
+        return this.properties ?? [];
     }
 
     getAutoCollection(): IAutoCollection {

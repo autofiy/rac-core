@@ -4,27 +4,21 @@ import {PropertiesConfiguration} from "../../../AutoCollection/AutoCollectionPro
 
 export class TitleMapperPropertyMiddleware implements PropertyGeneratorMiddleware {
 
-    private readonly data: any;
     private configuration: PropertiesConfiguration;
 
-    public constructor(data: any, configuration: PropertiesConfiguration) {
-        this.data = data;
+    public constructor(configuration: PropertiesConfiguration) {
         this.configuration = configuration;
     }
 
     handle(properties: Property[]): PropertyMiddlewareReturnType {
-        const keys = Object.keys(this.data);
-        const newProperties = this.mapTitles(keys);
+        const newProperties = properties.map(property => {
+            if (this.configuration.titles?.[property.name]) {
+                property.title = this.configuration.titles?.[property.name];
+            }
+            return {...property};
+        });
         return {data: newProperties};
     }
 
-    private mapTitles(keys: string[]) {
-        return keys.map(key => {
-            const property = {title: key, name: key};
-            if (this.configuration.titles?.[key]) {
-                property.title = this.configuration.titles?.[key];
-            }
-            return property;
-        });
-    }
+
 }

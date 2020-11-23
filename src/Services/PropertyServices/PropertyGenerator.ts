@@ -7,6 +7,7 @@ import {TitleMapperPropertyMiddleware} from "./Middleware/TitleMapperPropertyMid
 import {ExtraPropertiesMiddleware} from "./Middleware/ExtraPropertiesMiddleware";
 import {OrderingPropertyMiddleware} from "./Middleware/OrderingPropertyMiddleware";
 import {DefaultPropertyOrderingFactory} from "./Middleware/Order/PropertyOrderingFactory";
+import {AutoDetectPropertiesMiddleware} from "./Middleware/AutoDetectPropertiesMiddleware";
 
 export interface Property {
     name: string;
@@ -64,7 +65,8 @@ export class SmartPropertyGenerator extends PropertyGeneratorBase {
         const orderingFactory = new DefaultPropertyOrderingFactory(configuration);
         return [
             new PassedPropertiesMiddleware(configuration),
-            new TitleMapperPropertyMiddleware(this.getRow(), configuration),
+            new AutoDetectPropertiesMiddleware(this.getRow()),
+            new TitleMapperPropertyMiddleware(configuration),
             new ExtraPropertiesMiddleware(configuration),
             new OrderingPropertyMiddleware(orderingFactory.getOrdering()),
         ];
