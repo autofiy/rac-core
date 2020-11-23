@@ -111,6 +111,6 @@ describe('SimpleCollectionRenderer', () => {
         });
 
     });
-    
+
 
 });

@@ -15,7 +15,7 @@ export class PassedPropertiesMiddleware implements PropertyGeneratorMiddleware {
         if (passedProperties) {
             return {data: passedProperties, break: true};
         }
-        return {data: []};
+        return {data: properties};
     }
 
 }

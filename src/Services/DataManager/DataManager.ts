@@ -99,7 +99,7 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         this.getAutoCollection().event().emit(EventType.ITEM_REMOVED, removedItem);
     }
 
-    updateItemAt(index: number, newItem: any , afterChange? : () => void): void {
+    updateItemAt(index: number, newItem: any, afterChange?: () => void): void {
         const items = [...this.getAutoCollection().getState().all];
         const oldItem = items[index];
         items.splice(index, 1, newItem);

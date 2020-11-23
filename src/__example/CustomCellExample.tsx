@@ -19,7 +19,7 @@ class CustomCellExample extends Component {
                                     id: (_, data) => <td style={{background: 'red', color: 'white'}}>{data.id}</td>
                                 },
                                 headerRender: {
-                                    id: (_, data) => <th style={{background: 'blue', color: 'white'}}>#</th>
+                                    id: () => <th style={{background: 'blue', color: 'white'}}>#</th>
                                 }
                             }}
                             extra={{dataSourceOptions: {data: data}}}/>

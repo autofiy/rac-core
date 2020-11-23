@@ -57,5 +57,5 @@ describe('SimpleTable', () => {
             </table>
         )
     });
-    
+
 });

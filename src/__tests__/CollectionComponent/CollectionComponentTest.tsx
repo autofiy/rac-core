@@ -35,7 +35,7 @@ describe('CollectionComponent', () => {
         const instance = component.instance() as CollectionComponentBase;
         expect(instance.getAutoCollection()).toBe(ac);
     });
-    
+
     it('should generate properties lazily', function () {
         const properties = [{name: 'test', title: 'TEST'}];
         const generator = mock<PropertyGenerator>({

@@ -29,8 +29,8 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         this.eventManager = serviceProvider.getService<EventManager>("eventManager", this);
 
         this.state = {
-            filtered : false,
-            all : AutoCollectionDefault.initialData,
+            filtered: false,
+            all: AutoCollectionDefault.initialData,
             data: AutoCollectionDefault.initialData,
             loading: false,
             error: null
@@ -45,10 +45,12 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         this.fetchData();
     }
 
-    private fetchData(): void {
-        // noinspection JSIgnoredPromiseFromCall
-        this.fetcherService.fetch();
+
+    componentWillUnmount() {
+        this.event().clearAllListeners();
+        this.fetcherService.cancel();
     }
+
 
     render() {
         return this.renderService.render();
@@ -78,7 +80,6 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         return this.state;
     }
 
-
     refreshData(): void {
         if (!this.isLoading()) {
             this.fetchData();
@@ -87,6 +88,11 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
 
     updateState(state: Partial<AutoCollectionState>, afterChange?: () => void) {
         return this.setState(state as any, afterChange);
+    }
+
+    private fetchData(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.fetcherService.fetch();
     }
 
 

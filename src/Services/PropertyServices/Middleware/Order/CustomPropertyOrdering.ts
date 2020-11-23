@@ -1,4 +1,3 @@
-
 import {PropertiesConfiguration} from "../../../../AutoCollection/AutoCollectionProps";
 import {Property} from "../../PropertyGenerator";
 import {ConfigurableOrderingBase} from "./PropertyOrdering";

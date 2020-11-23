@@ -28,10 +28,6 @@ export abstract class PropertyGeneratorBase implements PropertyGenerator {
         this.configurations = autoCollection.getProps().properties ?? AutoCollectionDefault.defaultPropertiesConfiguration;
     }
 
-    protected getOptions(): PropertiesConfiguration {
-        return this.configurations;
-    }
-
     generate(): Property[] {
         const middlewareArr = this.getMiddlewareArray();
         let data: Property[] = [];
@@ -45,6 +41,9 @@ export abstract class PropertyGeneratorBase implements PropertyGenerator {
         return data;
     }
 
+    protected getOptions(): PropertiesConfiguration {
+        return this.configurations;
+    }
 
     protected getRow(): any {
         let data = this.autoCollection.data().get();

@@ -7,6 +7,8 @@ export interface EventManager extends Service {
     addListener(eventName: string, callback: EventCallback): void;
 
     removeListener(eventName: string): void;
+
+    clearAllListeners(): void;
 }
 
 export type EventCallback = (autoCollection: IAutoCollection, data: any) => void;
@@ -14,7 +16,7 @@ export type EventCallback = (autoCollection: IAutoCollection, data: any) => void
 
 export class DefaultEventManager extends ServiceBase implements EventManager {
 
-    private readonly listeners: { [name: string]: EventCallback };
+    private listeners: { [name: string]: EventCallback };
 
     constructor(autoCollection: IAutoCollection) {
         super(autoCollection);
@@ -32,6 +34,10 @@ export class DefaultEventManager extends ServiceBase implements EventManager {
     emit(eventName: string, payload: any): void {
         const listener = this.listeners[eventName] ?? null;
         listener?.(this.getAutoCollection(), payload);
+    }
+
+    clearAllListeners() {
+        this.listeners = {};
     }
 
 }

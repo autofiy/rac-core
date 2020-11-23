@@ -12,40 +12,48 @@ export interface DataFetcher<Options extends FetcherOptions> {
     fetch(): Promise<any>;
 
     getOptions(): Options;
+
+    cancel(): void;
 }
 
 
 export abstract class DataFetcherBase<Options extends FetcherOptions> implements DataFetcher<Options> {
 
     private readonly autoCollection: IAutoCollection;
+    private shouldCancel: boolean = false;
 
     constructor(collection: IAutoCollection) {
         this.autoCollection = collection;
+    }
+
+    fetch(): Promise<any> {
+        this.shouldCancel = false;
+        this.startFetching();
+        return new Promise<any>(async (resolve, reject) => {
+            try {
+                const data = await this.fetchData();
+                if (!this.shouldCancel) {
+                    this.doneFetching(data);
+                    resolve(data);
+                }
+            } catch (e) {
+                if (!this.shouldCancel) {
+                    this.errorFetching(e)
+                    reject(e);
+                }
+            }
+        })
+    }
+
+    getOptions(): Options {
+        return this.autoCollection.getProps().extra?.dataSourceOptions ?? {};
     }
 
     protected getAutoCollection(): IAutoCollection {
         return this.autoCollection;
     }
 
-    fetch(): Promise<any> {
-        this.startFetching();
-        return new Promise<any>(async (resolve, reject) => {
-            try {
-                const data = await this.fetchData();
-                this.doneFetching(data);
-                resolve(data);
-            } catch (e) {
-                this.errorFetching(e)
-                reject(e);
-            }
-        })
-    }
-
     protected abstract fetchData(): Promise<any>;
-
-    getOptions(): Options {
-        return this.autoCollection.getProps().extra?.dataSourceOptions ?? {};
-    }
 
     protected startFetching(): void {
         this.getAutoCollection().event().emit(EventType.FETCH_START, this.getOptions());
@@ -72,6 +80,10 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
             error: error,
             data: AutoCollectionDefault.initialData
         });
+    }
+
+    cancel(): void {
+        this.shouldCancel = true;
     }
 }
 

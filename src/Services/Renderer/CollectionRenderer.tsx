@@ -15,6 +15,8 @@ export abstract class CollectionRendererBase<Options> implements CollectionRende
         this.autoCollection = autoCollection;
     }
 
+    abstract render(): any;
+
     protected getAutoCollection(): IAutoCollection {
         return this.autoCollection;
     }
@@ -22,8 +24,6 @@ export abstract class CollectionRendererBase<Options> implements CollectionRende
     protected getOptions(): Options {
         return this.autoCollection.getProps().extra?.renderOptions ?? {};
     }
-
-    abstract render(): any;
 
 }
 

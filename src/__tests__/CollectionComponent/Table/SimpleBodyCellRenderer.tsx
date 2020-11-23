@@ -5,7 +5,7 @@ import {Property} from "../../../Services/PropertyServices/PropertyGenerator";
 import React from "react";
 
 describe('SimpleBodyCellRenderer', () => {
-    
+
     it('should render header cell', function () {
         const autoCollection = mock<IAutoCollection>({getProps: () => ({} as any)});
         const renderer = new SimpleBodyCellRenderer(autoCollection);

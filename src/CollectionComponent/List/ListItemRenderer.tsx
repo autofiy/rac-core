@@ -12,7 +12,7 @@ export class SimpleListItemRenderer implements ListItemRenderer {
         return <React.Fragment>
             {
                 properties.map(
-                    (property, index) =>
+                    (property) =>
                         <div key={property.name}>
                             <b>{property.title}</b>
                             <span>{item[property.name]}</span>

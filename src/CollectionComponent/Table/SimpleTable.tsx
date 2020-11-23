@@ -15,14 +15,6 @@ export class SimpleTable extends CollectionComponentBase {
         this.bodyCellRenderer = this.getBodyCellRenderer();
     }
 
-    protected getHeaderCellRenderer(): CellRenderer {
-        return new SimpleHeaderCellRenderer(this.getAutoCollection());
-    }
-
-    protected getBodyCellRenderer(): CellRenderer {
-        return new SimpleBodyCellRenderer(this.getAutoCollection());
-    }
-
     render() {
         return <table>
             {this.renderTableHead()}
@@ -30,6 +22,13 @@ export class SimpleTable extends CollectionComponentBase {
         </table>
     }
 
+    protected getHeaderCellRenderer(): CellRenderer {
+        return new SimpleHeaderCellRenderer(this.getAutoCollection());
+    }
+
+    protected getBodyCellRenderer(): CellRenderer {
+        return new SimpleBodyCellRenderer(this.getAutoCollection());
+    }
 
     protected renderTableHead(): any {
         return <thead>

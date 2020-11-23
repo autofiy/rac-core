@@ -24,7 +24,6 @@ export class HttpDataFetcher extends DataFetcherBase<HttpDataFetcherOptions> {
     }
 
 
-
     private async send(url: string) {
         const extractData = this.getOptions().extractDataFromResponse ?? AutoCollectionDefault.extractDataFromResponse;
         return fetch(url, {
