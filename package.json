@@ -6,7 +6,7 @@
   "types": "dist/main.d.ts",
   "dependencies": {},
   "scripts": {
-    "start": "react-scripts start",
+    "start": "npm run serve & react-scripts start",
     "serve": "node ./test-server/server.js",
     "build": "tsc --noEmit false",
     "test": "react-scripts test",

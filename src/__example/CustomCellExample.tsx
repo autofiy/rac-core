@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {AutoCollection} from "../AutoCollection/AutoCollection";
-import {SimpleTable} from "../CollectionComponent/Table/SimpleTable";
 import {DirectDataFetcher} from "../Services/Fetcher/DirectDataFetcher";
+import {SimpleTable} from "../CollectionComponent/Table/SimpleTable";
 
-class CustomPropertiesExample extends Component {
+class CustomCellExample extends Component {
     render() {
         const data = [
             {id: 1, name: 'Ali Faris', year: '1993'},
@@ -15,13 +15,16 @@ class CustomPropertiesExample extends Component {
             <AutoCollection as={SimpleTable}
                             services={{fetcher: ac => new DirectDataFetcher(ac)}}
                             properties={{
-                                properties: [{name: 'name', title: 'THE NAME'}, {name: 'year', title: 'THE YEAR'}],
+                                render: {
+                                    id: (_, data) => <td style={{background: 'red', color: 'white'}}>{data.id}</td>
+                                },
+                                headerRender: {
+                                    id: (_, data) => <th style={{background: 'blue', color: 'white'}}>#</th>
+                                }
                             }}
-                            extra={{
-                                dataSourceOptions: {data: data},
-                            }}/>
+                            extra={{dataSourceOptions: {data: data}}}/>
         );
     }
 }
 
-export default CustomPropertiesExample;
+export default CustomCellExample;

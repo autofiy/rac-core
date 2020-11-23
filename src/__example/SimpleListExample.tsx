@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import {AutoCollection} from "../AutoCollection/AutoCollection";
 import {SimpleList} from "../CollectionComponent/List/SimpleList";
 import {DirectDataFetcher} from "../Services/Fetcher/DirectDataFetcher";
-import {SimpleTable} from "../CollectionComponent/Table/SimpleTable";
 
-class SimpleTableExample extends Component {
+class SimpleListExample extends Component {
     render() {
         const data = [
             {id: 1, name: 'Ali Faris', year: '1993'},
@@ -13,11 +12,11 @@ class SimpleTableExample extends Component {
             {id: 4, name: 'Mohammed Ali', year: '2019'},
         ];
         return (
-            <AutoCollection as={SimpleTable}
+            <AutoCollection as={SimpleList}
                             services={{fetcher: ac => new DirectDataFetcher(ac)}}
                             extra={{dataSourceOptions: {data: data}}}/>
         );
     }
 }
 
-export default SimpleTableExample;
+export default SimpleListExample;

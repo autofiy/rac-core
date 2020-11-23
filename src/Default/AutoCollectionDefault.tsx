@@ -21,6 +21,6 @@ export const AutoCollectionDefault: IAutoCollectionDefault = {
     stateManipulator: response => ({data: response, loading: false, error: null, filtered: false, all: response}),
     httpMethod: "GET",
     renderLoading: () => <h1>Loading...</h1>,
-    renderError: error => <h1>Error : {error}</h1>,
+    renderError: error => <h1>Error : {String(error)}</h1>,
     initialData: []
 };

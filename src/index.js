@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AutoCollectionExample from "./__example/AutoCollectionExample";
+import ExampleContainer from "./__example/ExampleContainer";
 
 
 ReactDOM.render(
     <React.StrictMode>
         <div>
-            <AutoCollectionExample />
+            <ExampleContainer/>
         </div>
     </React.StrictMode>,
     document.getElementById('root')

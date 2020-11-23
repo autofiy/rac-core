@@ -1,4 +1,4 @@
-- SUPPORT PAGING
+- LISTEN TO EVENTS
     
 TESTS : 
 
@@ -19,8 +19,7 @@ TESTS :
         
         
         CollectionComponent             DONE
-        SimpleTable
-        CellRenderer
-        SimpleList
-        ListItemRenderer
-        
+        SimpleTable                     DONE
+        CellRenderer                    DONE
+        SimpleList                      DONE
+        ListItemRenderer                DONE
