@@ -64,7 +64,8 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         items.splice(index, 0, item);
         this.getAutoCollection().updateState({
             all: items,
-            data : items
+            data : items,
+            filtered : false
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_ADDED, {index: index, item: item});
     }
@@ -78,7 +79,8 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         items.push(item);
         this.getAutoCollection().updateState({
             all: items,
-            data : items
+            data : items,
+            filtered : false
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_ADDED, {index: items.length - 1, item: item});
     }
@@ -97,7 +99,8 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         items.splice(index, 1);
         this.getAutoCollection().updateState({
             all: items,
-            data : items
+            data : items,
+            filtered : false
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_REMOVED, removedItem);
     }
@@ -108,7 +111,8 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
         items.splice(index, 1, newItem);
         this.getAutoCollection().updateState({
             all: items,
-            data : items
+            data : items,
+            filtered : false
         }, afterChange);
         this.getAutoCollection().event().emit(EventType.ITEM_MODIFIED, {old: oldItem, new: newItem, index: index});
     }

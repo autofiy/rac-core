@@ -4,7 +4,9 @@
   "private": false,
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
-  "dependencies": {},
+  "dependencies": {
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.3.1"
+  },
   "scripts": {
     "start": "npm run serve & react-scripts start",
     "serve": "node ./test-server/server.js",

@@ -70,6 +70,8 @@ describe('DataManagerTest', () => {
         manager.insertAt(1, {new: true}, afterChange);
         expect(autoCollection.updateState).toBeCalledWith({
             all: [{x: true}, {new: true}, {y: true}, {z: true}],
+            data: [{x: true}, {new: true}, {y: true}, {z: true}],
+            filtered : false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_ADDED, {index: 1, item: {new: true}});
     });
@@ -79,7 +81,9 @@ describe('DataManagerTest', () => {
         const afterChange = jest.fn();
         manager.insertFirst({new: true}, afterChange);
         expect(autoCollection.updateState).toBeCalledWith({
-            all: [{new: true}, {x: true}, {y: true}, {z: true}]
+            all: [{new: true}, {x: true}, {y: true}, {z: true}],
+            data: [{new: true}, {x: true}, {y: true}, {z: true}],
+            filtered : false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_ADDED, {index: 0, item: {new: true}});
     });
@@ -89,7 +93,9 @@ describe('DataManagerTest', () => {
         const afterChange = jest.fn();
         manager.insertLast({new: true}, afterChange);
         expect(autoCollection.updateState).toBeCalledWith({
-            all: [{x: true}, {y: true}, {z: true}, {new: true}]
+            all: [{x: true}, {y: true}, {z: true}, {new: true}],
+            data: [{x: true}, {y: true}, {z: true}, {new: true}],
+            filtered : false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_ADDED, {index: 3, item: {new: true}});
     });
@@ -109,7 +115,9 @@ describe('DataManagerTest', () => {
         const afterChange = jest.fn();
         manager.removeAt(1, afterChange);
         expect(autoCollection.updateState).toBeCalledWith({
-            all: [{x: true}, {z: true}]
+            all: [{x: true}, {z: true}],
+            data: [{x: true}, {z: true}],
+            filtered : false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_REMOVED, {y: true});
     });
@@ -119,7 +127,9 @@ describe('DataManagerTest', () => {
         const afterChange = jest.fn();
         manager.updateItemAt(1, {yy: true}, afterChange);
         expect(autoCollection.updateState).toBeCalledWith({
-            all: [{x: true}, {yy: true}, {z: true}]
+            all: [{x: true}, {yy: true}, {z: true}],
+            data: [{x: true}, {yy: true}, {z: true}],
+            filtered : false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_MODIFIED, {
             index: 1,

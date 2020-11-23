@@ -18,9 +18,6 @@ interface Props {
 }
 
 export class CollectionComponentBase extends Component<Props> implements CollectionComponent {
-
-    private properties: Property[] | null = null;
-
     public render(): any {
         return null;
     }
@@ -30,18 +27,11 @@ export class CollectionComponentBase extends Component<Props> implements Collect
     }
 
     getProperties(): Property[] {
-        if (this.properties === null && this.isDataReady()) {
-            this.properties = this.props.propertyGenerator.generate();
-        }
-        return this.properties ?? [];
+        return this.props.propertyGenerator.generate();
     }
 
     getAutoCollection(): IAutoCollection {
         return this.props.autoCollection;
-    }
-
-    private isDataReady(): boolean {
-        return this.getData().length > 0;
     }
 
 }

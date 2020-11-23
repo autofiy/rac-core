@@ -47,8 +47,10 @@ describe('DirectFetcher', () => {
         expect(autoCollection.updateState).toBeCalledWith({
             loading: false,
             error: null,
-            data: data
-        });
+            data: data,
+            all : data,
+            filtered : false
+        } , expect.anything());
 
     });
 
@@ -64,8 +66,10 @@ describe('DirectFetcher', () => {
         expect(autoCollection.updateState).toBeCalledWith({
             loading: false,
             error: null,
-            data: []
-        });
+            data: [],
+            all : [],
+            filtered : false
+        } , expect.anything());
 
     });
 

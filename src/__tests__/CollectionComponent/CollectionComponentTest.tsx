@@ -1,11 +1,11 @@
 import {configure, mount} from "enzyme";
-import {CollectionComponentBase} from "../../CollectionComponent/CollectionComponent";
 import React from "react";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import {mock} from "jest-mock-extended";
 import {Property, PropertyGenerator} from "../../Services/PropertyServices/PropertyGenerator";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 import {DataManager} from "../../Services/DataManager/DataManager";
+import {CollectionComponentBase} from "../../CollectionComponent/CollectionComponent";
 
 configure({adapter: new Adapter()});
 
@@ -43,7 +43,11 @@ describe('CollectionComponent', () => {
                 return properties;
             }
         });
-        const ac = mock<IAutoCollection>();
+        const ac = mock<IAutoCollection>({
+            data(): DataManager {
+                return mock<DataManager>();
+            }
+        });
         const component = mount(<CollectionComponentBase propertyGenerator={generator} autoCollection={ac}/>);
         const instance = component.instance() as CollectionComponentBase;
         const generatedProperties = instance.getProperties();

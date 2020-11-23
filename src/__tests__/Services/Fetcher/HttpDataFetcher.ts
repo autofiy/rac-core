@@ -1,15 +1,20 @@
 import {mock} from "jest-mock-extended";
 import {IAutoCollection} from "../../../AutoCollection/IAutoCollection";
 import {HttpDataFetcher} from "../../../Services/Fetcher/HttpDataFetcher";
-import {AutoCollectionDefault} from "../../../Default/AutoCollectionDefault";
 import fetchMock from "jest-fetch-mock";
+import {AutoCollectionDefault} from "../../../Default/AutoCollectionDefault";
+import {EventManager} from "../../../Services/EventManager/EventManager";
 
 fetchMock.enableMocks();
 
 describe('HttpDataFetcher', () => {
 
     it('should change state when fetching start', function () {
-        const autoCollection = mock<IAutoCollection>({getProps: () => ({} as any)});
+        const autoCollection = mock<IAutoCollection>({
+            getProps: () => ({} as any), event(): EventManager {
+                return mock<EventManager>();
+            }
+        });
         const responseMock: any = () => {
             return {
                 status: 200,
@@ -22,7 +27,7 @@ describe('HttpDataFetcher', () => {
         expect(autoCollection.updateState).toBeCalledWith({
             data: AutoCollectionDefault.initialData,
             loading: true,
-            error: null
+            error: null,
         });
     });
 
@@ -31,7 +36,10 @@ describe('HttpDataFetcher', () => {
         const autoCollection = mock<IAutoCollection>({
             getProps: () => ({
                 extra: {dataSourceOptions: {url: 'http://localhost'}}
-            } as any)
+            } as any),
+            event(): EventManager {
+                return mock<EventManager>();
+            }
         });
         let response = [{}, {}];
         fetchMock.resetMocks();
@@ -40,7 +48,7 @@ describe('HttpDataFetcher', () => {
         await fetcher.fetch();
         expect(autoCollection.updateState.mock.calls).toEqual([
             [{data: AutoCollectionDefault.initialData, loading: true, error: null}],
-            [{data: response, loading: false, error: null}]
+            [{data: response, loading: false, error: null , all : response , filtered : false} , expect.anything()]
         ]);
     });
 
@@ -49,7 +57,10 @@ describe('HttpDataFetcher', () => {
         const autoCollection = mock<IAutoCollection>({
             getProps: () => ({
                 extra: {dataSourceOptions: {url: 'http://localhost'}}
-            } as any)
+            } as any),
+            event(): EventManager {
+                return mock<EventManager>();
+            }
         });
         fetchMock.resetMocks();
         fetchMock.mockReject(() => Promise.reject('failure'));
@@ -58,8 +69,8 @@ describe('HttpDataFetcher', () => {
             await fetcher.fetch();
         } catch {
             expect(autoCollection.updateState.mock.calls).toEqual([
-                [{data: AutoCollectionDefault.initialData, loading: true, error: null}],
-                [{data: AutoCollectionDefault.initialData, loading: false, error: 'failure'}]
+                [{data: AutoCollectionDefault.initialData, loading: true, error: null } ],
+                [{data: AutoCollectionDefault.initialData, loading: false, error: 'failure' }]
             ]);
         }
     });

@@ -3,7 +3,7 @@ import {AutoCollection} from "../../AutoCollection/AutoCollection";
 import {DataFetcher} from "../../Services/Fetcher/DataFetcher";
 import {mock} from "jest-mock-extended";
 import React from "react";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import {EmptyComponent} from "../../CollectionComponent/CollectionComponent";
 
 configure({adapter: new Adapter()});
