@@ -23,3 +23,6 @@ yarn-error.log*
 .eslintcache
 
 /dist/__example
+/src
+/public
+/test-server
