@@ -13,6 +13,8 @@ export interface IAutoCollectionDefault {
     renderError: (error: any) => any;
     initialData: any;
     component: any;
+
+    renderEmpty: () => any;
 }
 
 export const AutoCollectionDefault: IAutoCollectionDefault = {
@@ -24,6 +26,7 @@ export const AutoCollectionDefault: IAutoCollectionDefault = {
     httpMethod: "GET",
     renderLoading: () => <h1>Loading...</h1>,
     renderError: error => <h1>Error : {String(error)}</h1>,
+    renderEmpty: () => <h1>No Data</h1>,
     initialData: [],
-    component: SimpleTable
+    component: SimpleTable,
 };

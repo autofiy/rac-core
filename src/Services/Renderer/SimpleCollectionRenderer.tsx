@@ -4,12 +4,14 @@ import {AutoCollectionDefault} from "../../Default/AutoCollectionDefault";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 
 export interface SimpleCollectionRenderOption {
+    renderEmpty: () => any;
     renderCollectionOnError?: boolean;
     renderCollectionOnLoading: boolean;
     renderLoading?: () => void
     renderError?: (error: any) => void;
     loadingPosition?: "top" | "bottom";
     errorPosition?: "top" | "bottom";
+    displayTableWhenEmpty?: boolean;
     positioning: (loading: any, error: any, component: any) => any[];
 }
 
@@ -45,8 +47,20 @@ export class SimpleCollectionRenderer extends CollectionRendererBase<SimpleColle
         return null;
     }
 
+    protected renderEmpty(): any {
+        if (this.getAutoCollection().data().get()?.length === 0) {
+            const renderEmpty = this.getOptions().renderEmpty ?? this.defaultRenderEmpty;
+            return renderEmpty();
+        }
+        return null;
+    }
+
     protected defaultRenderError = (error: any): any => {
         return AutoCollectionDefault.renderError(error);
+    }
+
+    protected defaultRenderEmpty = () => {
+        return AutoCollectionDefault.renderEmpty();
     }
 
     protected renderCollection(): any {
@@ -64,15 +78,17 @@ export class SimpleCollectionRenderer extends CollectionRendererBase<SimpleColle
         const loading = this.renderLoading();
         const error = this.renderError();
         const collection = this.renderCollection();
-        const positions = this.handlePositioning(loading, error, collection);
+        const empty = this.renderEmpty();
+        const positions = this.handlePositioning(loading, error, empty, collection);
         return <React.Fragment>
             {positions[0]}
             {positions[1]}
             {positions[2]}
+            {positions[3]}
         </React.Fragment>
     }
 
-    protected handlePositioning(loading: any, error: any, collection: any): any[] {
+    protected handlePositioning(loading: any, error: any, empty: any, collection: any): any[] {
         const elements: any[] = [];
         const options = this.getOptions();
         if (options.loadingPosition === "top" || options.loadingPosition === undefined) {
@@ -81,7 +97,11 @@ export class SimpleCollectionRenderer extends CollectionRendererBase<SimpleColle
         if (options.errorPosition === "top" || options.errorPosition === undefined) {
             elements.push(error);
         }
-        elements.push(collection);
+
+        const emptyComponent = !loading && !error ? empty : null;
+        elements.push((options.displayTableWhenEmpty && emptyComponent) || !emptyComponent ? collection : null);
+        elements.push(emptyComponent);
+
         if (options.loadingPosition === "bottom") {
             elements.push(loading);
         }
