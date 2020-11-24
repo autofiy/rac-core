@@ -11,11 +11,15 @@ app.get('/', (req, res) => {
 
     time++;
 
+    if (time === 4) {
+        time = 1;
+    }
+
     setTimeout(() => {
-        if (time === 2 || time === 4 || time === 6) {
+        if (time === 2) {
             return res.sendStatus(400);
         }
-        if (time === 3 || time === 7) {
+        if (time === 3) {
             return res.json([]);
         }
 
@@ -26,7 +30,7 @@ app.get('/', (req, res) => {
             {id: 4, name: 'Fatima Ali', age: 5},
             {id: 5, name: 'Test', age: 0},
         ]);
-    }, 3000);
+    }, 1000);
 
 
 });
