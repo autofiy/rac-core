@@ -5,13 +5,14 @@ import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 import {DataManager} from "../Services/DataManager/DataManager";
 import {EventCallback, EventManager} from "../Services/EventManager/EventManager";
+import {EventType} from "../Services/EventManager/EventType";
 
 export interface AutoCollectionProps {
     as: any;
     services?: Partial<ServiceConfiguration>;
     properties?: PropertiesConfiguration;
     extra?: AutoCollectionPropsExtra;
-    on?: { [event: string]: EventCallback }
+    on?: { [event in EventType]: EventCallback }
 }
 
 export interface ServiceConfiguration {
