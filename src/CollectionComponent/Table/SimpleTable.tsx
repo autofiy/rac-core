@@ -5,8 +5,8 @@ import {CellRenderer, SimpleBodyCellRenderer, SimpleHeaderCellRenderer} from "./
 
 export class SimpleTable extends CollectionComponentBase {
 
-    private readonly headerCellRenderer: CellRenderer;
-    private readonly bodyCellRenderer: CellRenderer;
+    protected readonly headerCellRenderer: CellRenderer;
+    protected readonly bodyCellRenderer: CellRenderer;
 
 
     constructor(props: any) {
