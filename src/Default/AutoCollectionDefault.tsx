@@ -1,5 +1,6 @@
 import React from "react";
 import {AutoCollectionState, PropertiesConfiguration} from "../AutoCollection/AutoCollectionProps";
+import {SimpleTable} from "../CollectionComponent/Table/SimpleTable";
 
 export interface IAutoCollectionDefault {
     defaultPropertiesConfiguration: PropertiesConfiguration;
@@ -11,6 +12,7 @@ export interface IAutoCollectionDefault {
     renderLoading: () => any;
     renderError: (error: any) => any;
     initialData: any;
+    component: any;
 }
 
 export const AutoCollectionDefault: IAutoCollectionDefault = {
@@ -22,5 +24,6 @@ export const AutoCollectionDefault: IAutoCollectionDefault = {
     httpMethod: "GET",
     renderLoading: () => <h1>Loading...</h1>,
     renderError: error => <h1>Error : {String(error)}</h1>,
-    initialData: []
+    initialData: [],
+    component: SimpleTable
 };

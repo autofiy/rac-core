@@ -5,16 +5,17 @@ const port = 9000;
 
 app.use(cors());
 
+let time = 0;
 
 app.get('/', (req, res) => {
 
+    time++;
+
     setTimeout(() => {
-        const error = req.query.error;
-        if (error) {
+        if (time === 2 || time === 4 || time === 6) {
             return res.sendStatus(400);
         }
-        const empty = req.query.empty;
-        if (empty) {
+        if (time === 3 || time === 7) {
             return res.json([]);
         }
 

@@ -50,10 +50,14 @@ export class SimpleCollectionRenderer extends CollectionRendererBase<SimpleColle
     }
 
     protected renderCollection(): any {
-        const CollectionComponent = this.getAutoCollection().getProps().as;
+        const CollectionComponent = this.getAutoCollection().getProps().as ?? this.getDefaultCollectionComponent();
         return <CollectionComponent propertyGenerator={this.getAutoCollection().getPropertyGenerator()}
                                     data={this.getAutoCollection().data().get()}
                                     autoCollection={this.getAutoCollection()}/>
+    }
+
+    protected getDefaultCollectionComponent() {
+        return AutoCollectionDefault.component;
     }
 
     protected renderInPositions(): any {

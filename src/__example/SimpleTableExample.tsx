@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {AutoCollection} from "../AutoCollection/AutoCollection";
-import {DirectDataFetcher} from "../Services/Fetcher/DirectDataFetcher";
-import {SimpleTable} from "../CollectionComponent/Table/SimpleTable";
 
 class SimpleTableExample extends Component {
     render() {
@@ -12,9 +10,7 @@ class SimpleTableExample extends Component {
             {id: 4, name: 'Mohammed Ali', year: '2019'},
         ];
         return (
-            <AutoCollection as={SimpleTable}
-                            services={{fetcher: ac => new DirectDataFetcher(ac)}}
-                            extra={{dataSourceOptions: {data: data}}}/>
+            <AutoCollection extra={{dataSourceOptions: {data: data}}}/>
         );
     }
 }

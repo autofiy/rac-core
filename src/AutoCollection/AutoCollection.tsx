@@ -8,6 +8,8 @@ import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
 import {DataManager} from "../Services/DataManager/DataManager";
 import {ServiceDefault} from "../Default/ServiceDefault";
+import {DirectDataFetcher} from "../Services/Fetcher/DirectDataFetcher";
+import {HttpDataFetcher} from "../Services/Fetcher/HttpDataFetcher";
 
 
 export class AutoCollection extends Component<AutoCollectionProps, AutoCollectionState> implements IAutoCollection {
@@ -22,7 +24,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         super(props);
 
         const serviceProvider = ServiceDefault.serviceProvider(this);
-        this.fetcherService = serviceProvider.getService<DataFetcher<any>>("fetcher", this);
+        this.fetcherService = serviceProvider.getService<DataFetcher<any>>("fetcher", this, this.getDefaultFetcher);
         this.renderService = serviceProvider.getService<CollectionRenderer<any>>("renderer", this);
         this.propertyGenerator = serviceProvider.getService<PropertyGenerator>("propertyGenerator", this);
         this.dataManager = serviceProvider.getService<DataManager>("dataManager", this);
@@ -36,9 +38,17 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
             error: null
         };
 
-
         const keys = Object.keys(props.on ?? {});
-        keys.forEach(key => this.event().addListener(key, props.on![key]));
+        keys.forEach(key => this.event().addListener(key, (props.on as any)[key]));
+    }
+
+    private getDefaultFetcher = () => {
+        if (this.props.extra?.dataSourceOptions?.data) {
+            return new DirectDataFetcher(this);
+        } else if (this.props.extra?.dataSourceOptions?.url) {
+            return new HttpDataFetcher(this);
+        }
+        return undefined;
     }
 
     getPropertyGenerator(): PropertyGenerator {

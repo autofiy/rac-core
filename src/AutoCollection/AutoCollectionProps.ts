@@ -8,11 +8,11 @@ import {EventCallback, EventManager} from "../Services/EventManager/EventManager
 import {EventType} from "../Services/EventManager/EventType";
 
 export interface AutoCollectionProps {
-    as: any;
+    as?: any;
     services?: Partial<ServiceConfiguration>;
     properties?: PropertiesConfiguration;
     extra?: AutoCollectionPropsExtra;
-    on?: { [event in EventType]: EventCallback }
+    on?: { [event in EventType]: EventCallback };
 }
 
 export interface ServiceConfiguration {
