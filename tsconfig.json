@@ -26,7 +26,7 @@
     "src"
   ],
   "exclude": [
-    "src/old/__tests__/**",
-    "scr/example/**"
+    "scr/__example",
+    "src/__tests__"
   ]
 }
