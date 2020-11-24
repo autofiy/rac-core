@@ -1,5 +1,5 @@
 {
-  "name": "auto-collection",
+  "name": "rac-core",
   "version": "1.0.0",
   "private": false,
   "main": "dist/main.js",
