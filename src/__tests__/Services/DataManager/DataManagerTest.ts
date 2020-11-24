@@ -71,7 +71,7 @@ describe('DataManagerTest', () => {
         expect(autoCollection.updateState).toBeCalledWith({
             all: [{x: true}, {new: true}, {y: true}, {z: true}],
             data: [{x: true}, {new: true}, {y: true}, {z: true}],
-            filtered : false
+            filtered: false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_ADDED, {index: 1, item: {new: true}});
     });
@@ -83,7 +83,7 @@ describe('DataManagerTest', () => {
         expect(autoCollection.updateState).toBeCalledWith({
             all: [{new: true}, {x: true}, {y: true}, {z: true}],
             data: [{new: true}, {x: true}, {y: true}, {z: true}],
-            filtered : false
+            filtered: false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_ADDED, {index: 0, item: {new: true}});
     });
@@ -95,7 +95,7 @@ describe('DataManagerTest', () => {
         expect(autoCollection.updateState).toBeCalledWith({
             all: [{x: true}, {y: true}, {z: true}, {new: true}],
             data: [{x: true}, {y: true}, {z: true}, {new: true}],
-            filtered : false
+            filtered: false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_ADDED, {index: 3, item: {new: true}});
     });
@@ -117,7 +117,7 @@ describe('DataManagerTest', () => {
         expect(autoCollection.updateState).toBeCalledWith({
             all: [{x: true}, {z: true}],
             data: [{x: true}, {z: true}],
-            filtered : false
+            filtered: false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_REMOVED, {y: true});
     });
@@ -129,7 +129,7 @@ describe('DataManagerTest', () => {
         expect(autoCollection.updateState).toBeCalledWith({
             all: [{x: true}, {yy: true}, {z: true}],
             data: [{x: true}, {yy: true}, {z: true}],
-            filtered : false
+            filtered: false
         }, afterChange);
         expect(autoCollection.event().emit).toBeCalledWith(EventType.ITEM_MODIFIED, {
             index: 1,

@@ -91,7 +91,7 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
     }
 
     updateState(state: Partial<AutoCollectionState>, afterChange?: () => void) {
-        console.log("UPDATE STATE"  , state);
+        console.log("UPDATE STATE", state);
         return this.setState(state as any, afterChange);
     }
 

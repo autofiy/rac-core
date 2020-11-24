@@ -48,9 +48,9 @@ describe('DirectFetcher', () => {
             loading: false,
             error: null,
             data: data,
-            all : data,
-            filtered : false
-        } , expect.anything());
+            all: data,
+            filtered: false
+        }, expect.anything());
 
     });
 
@@ -67,9 +67,9 @@ describe('DirectFetcher', () => {
             loading: false,
             error: null,
             data: [],
-            all : [],
-            filtered : false
-        } , expect.anything());
+            all: [],
+            filtered: false
+        }, expect.anything());
 
     });
 

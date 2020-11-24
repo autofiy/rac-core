@@ -48,7 +48,7 @@ describe('HttpDataFetcher', () => {
         await fetcher.fetch();
         expect(autoCollection.updateState.mock.calls).toEqual([
             [{data: AutoCollectionDefault.initialData, loading: true, error: null}],
-            [{data: response, loading: false, error: null , all : response , filtered : false} , expect.anything()]
+            [{data: response, loading: false, error: null, all: response, filtered: false}, expect.anything()]
         ]);
     });
 
@@ -69,8 +69,8 @@ describe('HttpDataFetcher', () => {
             await fetcher.fetch();
         } catch {
             expect(autoCollection.updateState.mock.calls).toEqual([
-                [{data: AutoCollectionDefault.initialData, loading: true, error: null } ],
-                [{data: AutoCollectionDefault.initialData, loading: false, error: 'failure' }]
+                [{data: AutoCollectionDefault.initialData, loading: true, error: null}],
+                [{data: AutoCollectionDefault.initialData, loading: false, error: 'failure'}]
             ]);
         }
     });

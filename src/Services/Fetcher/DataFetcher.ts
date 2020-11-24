@@ -49,6 +49,10 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
         return this.autoCollection.getProps().extra?.dataSourceOptions ?? {};
     }
 
+    cancel(): void {
+        this.shouldCancel = true;
+    }
+
     protected getAutoCollection(): IAutoCollection {
         return this.autoCollection;
     }
@@ -72,7 +76,6 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
         });
     }
 
-
     protected errorFetching(error: any): void {
         this.getAutoCollection().event().emit(EventType.FETCH_FAIL, error);
         this.getAutoCollection().updateState({
@@ -80,10 +83,6 @@ export abstract class DataFetcherBase<Options extends FetcherOptions> implements
             error: error,
             data: AutoCollectionDefault.initialData
         });
-    }
-
-    cancel(): void {
-        this.shouldCancel = true;
     }
 }
 
