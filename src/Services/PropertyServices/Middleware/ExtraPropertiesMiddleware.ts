@@ -11,6 +11,10 @@ export class ExtraPropertiesMiddleware implements PropertyGeneratorMiddleware {
     }
 
     handle(properties: Property[]): PropertyMiddlewareReturnType {
+        if (properties.length === 0) {
+            return {data: []};
+        }
+
         let extraProperties = this.configuration.extraProperties;
         if (extraProperties) {
             return {data: properties.concat(extraProperties)};
