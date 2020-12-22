@@ -1,35 +1,32 @@
-import React, {Component} from "react";
+import React from "react";
 import {IAutoCollection} from "./IAutoCollection";
 import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
 import {AutoCollectionDefault} from "../Default/AutoCollectionDefault";
-import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
+import {AutoCollectionProps, AutoCollectionState, DefaultServices, ServiceConfiguration} from "./AutoCollectionProps";
 import {EventManager} from "../Services/EventManager/EventManager";
 import {DataFetcher} from "../Services/Fetcher/DataFetcher";
-import {PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
 import {DataManager} from "../Services/DataManager/DataManager";
-import {ServiceDefault} from "../Default/ServiceDefault";
 import {DirectDataFetcher} from "../Services/Fetcher/DirectDataFetcher";
 import {HttpDataFetcher} from "../Services/Fetcher/HttpDataFetcher";
+import {AutofiyableComponent} from "@autofiy/autofiyable";
+import {Generator, Property} from "@autofiy/property";
 
 
-export class AutoCollection extends Component<AutoCollectionProps, AutoCollectionState> implements IAutoCollection {
+export class AutoCollection
+    extends AutofiyableComponent<AutoCollectionProps, AutoCollectionState, ServiceConfiguration>
+    implements IAutoCollection {
 
-    private readonly renderService: CollectionRenderer<any>;
+    private readonly renderService: CollectionRenderer;
     private readonly fetcherService: DataFetcher<any>;
-    private readonly propertyGenerator: PropertyGenerator;
     private readonly dataManager: DataManager;
     private readonly eventManager: EventManager;
 
     constructor(props: AutoCollectionProps) {
         super(props);
-
-        const serviceProvider = ServiceDefault.serviceProvider(this);
-        this.fetcherService = serviceProvider.getService<DataFetcher<any>>("fetcher", this, this.getDefaultFetcher);
-        this.renderService = serviceProvider.getService<CollectionRenderer<any>>("renderer", this);
-        this.propertyGenerator = serviceProvider.getService<PropertyGenerator>("propertyGenerator", this);
-        this.dataManager = serviceProvider.getService<DataManager>("dataManager", this);
-        this.eventManager = serviceProvider.getService<EventManager>("eventManager", this);
-
+        this.fetcherService = this.getServiceProvider().getService<DataFetcher<any>>("fetcher", this.fetchServiceCustomHandler);
+        this.renderService = this.getServiceProvider().getService<CollectionRenderer>("renderer");
+        this.dataManager = this.getServiceProvider().getService<DataManager>("dataManager");
+        this.eventManager = this.getServiceProvider().getService<EventManager>("eventManager");
         this.state = {
             filtered: false,
             all: AutoCollectionDefault.initialData,
@@ -37,12 +34,23 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
             loading: false,
             error: null
         };
-
         const keys = Object.keys(props.on ?? {});
         keys.forEach(key => this.event().addListener(key, (props.on as any)[key]));
     }
 
-    private getDefaultFetcher = () => {
+    protected initializeServices(): void {
+    }
+
+    getDefaultServices(): ServiceConfiguration {
+        return DefaultServices;
+    }
+
+    getProperties(): Property[] {
+        const generator: Generator = this.getServiceProvider().getService("propertyGenerator");
+        return generator.generate();
+    }
+
+    private fetchServiceCustomHandler = () => {
         if (this.props.extra?.dataSourceOptions?.data) {
             return new DirectDataFetcher(this);
         } else if (this.props.extra?.dataSourceOptions?.url) {
@@ -51,20 +59,14 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         return undefined;
     }
 
-    getPropertyGenerator(): PropertyGenerator {
-        return this.propertyGenerator;
+    async componentDidMount() {
+        await this.fetchData();
     }
-
-    componentDidMount() {
-        this.fetchData();
-    }
-
 
     componentWillUnmount() {
         this.event().clearAllListeners();
         this.fetcherService.cancel();
     }
-
 
     render() {
         return this.renderService.render();
@@ -76,10 +78,6 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
 
     data(): DataManager {
         return this.dataManager;
-    }
-
-    getProps(): AutoCollectionProps {
-        return this.props;
     }
 
     getError(): any {
@@ -94,21 +92,18 @@ export class AutoCollection extends Component<AutoCollectionProps, AutoCollectio
         return this.state;
     }
 
-    refreshData(): void {
+    async refreshData(): Promise<void> {
         if (!this.isLoading()) {
-            this.fetchData();
+            await this.fetchData();
         }
     }
 
     updateState(state: Partial<AutoCollectionState>, afterChange?: () => void) {
-        console.log("UPDATE STATE", state);
         return this.setState(state as any, afterChange);
     }
 
-    private fetchData(): void {
-        // noinspection JSIgnoredPromiseFromCall
-        this.fetcherService.fetch();
+    private async fetchData(): Promise<void> {
+        await this.fetcherService.fetch();
     }
-
 
 }

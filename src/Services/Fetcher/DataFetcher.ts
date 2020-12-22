@@ -1,14 +1,15 @@
-import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
-import {AutoCollectionDefault} from "../../Default/AutoCollectionDefault";
-import {AutoCollectionState} from "../../AutoCollection/AutoCollectionProps";
-import {EventType} from "../EventManager/EventType";
+import { IAutoCollection } from "../../AutoCollection/IAutoCollection";
+import { AutoCollectionDefault } from "../../Default/AutoCollectionDefault";
+import { AutoCollectionState } from "../../AutoCollection/AutoCollectionProps";
+import { EventType } from "../EventManager/EventType";
+import { Service } from "@autofiy/autofiyable";
 
 
 export interface FetcherOptions {
     stateManipulator?: (response: any) => AutoCollectionState;
 }
 
-export interface DataFetcher<Options extends FetcherOptions> {
+export interface DataFetcher<Options extends FetcherOptions> extends Service {
     fetch(): Promise<any>;
 
     getOptions(): Options;

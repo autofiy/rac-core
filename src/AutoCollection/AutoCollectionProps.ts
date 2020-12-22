@@ -1,40 +1,27 @@
+import {DefaultOrdererFactory, Generator, PropertiesConfiguration, SmartGenerator} from '@autofiy/property';
 import {IAutoCollection} from "./IAutoCollection";
-import {Property, PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
-import {ServiceCallback} from "../Services/Base/Service";
 import {DataFetcher} from "../Services/Fetcher/DataFetcher";
 import {CollectionRenderer} from "../Services/Renderer/CollectionRenderer";
-import {DataManager} from "../Services/DataManager/DataManager";
-import {EventCallback, EventManager} from "../Services/EventManager/EventManager";
+import {DataManager, DefaultDataManager} from "../Services/DataManager/DataManager";
+import {DefaultEventManager, EventCallback, EventManager} from "../Services/EventManager/EventManager";
 import {EventType} from "../Services/EventManager/EventType";
+import {AutofiyableProps, ServiceCallback, ServiceConfiguration as SC} from "@autofiy/autofiyable";
+import {SimpleCollectionRenderer} from '../Services/Renderer/SimpleCollectionRenderer';
+import {DirectDataFetcher} from '../Services/Fetcher/DirectDataFetcher';
 
-export interface AutoCollectionProps {
+export interface AutoCollectionProps
+    extends AutofiyableProps<ServiceConfiguration, AutoCollectionPropsExtra> {
     as?: any;
-    services?: Partial<ServiceConfiguration>;
     properties?: PropertiesConfiguration;
-    extra?: AutoCollectionPropsExtra;
     on?: { [event in EventType]: EventCallback };
 }
 
-export interface ServiceConfiguration {
+export interface ServiceConfiguration extends SC {
     fetcher: ServiceCallback<DataFetcher<any>>
-    renderer: ServiceCallback<CollectionRenderer<any>>,
-    propertyGenerator: ServiceCallback<PropertyGenerator>,
+    renderer: ServiceCallback<CollectionRenderer>,
+    propertyGenerator: ServiceCallback<Generator>,
     dataManager: ServiceCallback<DataManager>;
     eventManager: ServiceCallback<EventManager>;
-}
-
-
-export interface PropertiesConfiguration {
-    properties?: Property[];
-    titles?: { [name: string]: string };
-    extraProperties?: Property[];
-    orderBy?: string[] | ((properties: Property[]) => string[]);
-    headerRender?: {
-        [name: string]: (property: Property, autoCollection: IAutoCollection) => any;
-    },
-    render?: {
-        [name: string]: (property: Property, data: any, autoCollection: IAutoCollection) => any;
-    }
 }
 
 export interface AutoCollectionPropsExtra {
@@ -51,4 +38,17 @@ export interface AutoCollectionState {
     data: any;
     loading: boolean;
     error: any;
+}
+
+export const DefaultPropertiesConfiguration: PropertiesConfiguration = {};
+
+export const DefaultServices: ServiceConfiguration = {
+    fetcher: (ac: IAutoCollection) => new DirectDataFetcher(ac),
+    renderer: (ac: IAutoCollection) => new SimpleCollectionRenderer(ac),
+    propertyGenerator: (ac: IAutoCollection) => {
+        const config = ac.getProps().properties ?? DefaultPropertiesConfiguration
+        return new SmartGenerator(config, ac.data().get()[0] ?? {}, new DefaultOrdererFactory(config));
+    },
+    dataManager: ac => new DefaultDataManager(ac),
+    eventManager: ac => new DefaultEventManager(ac),
 }

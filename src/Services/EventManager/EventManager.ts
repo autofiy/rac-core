@@ -1,5 +1,6 @@
-import {Service, ServiceBase} from "../Base/Service";
+import {ServiceBase} from "../Base/Service";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
+import { Service } from "@autofiy/autofiyable";
 
 export interface EventManager extends Service {
     emit(eventName: string, payload: any): void;

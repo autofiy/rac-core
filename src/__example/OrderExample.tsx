@@ -15,7 +15,7 @@ class OrderExample extends Component {
             <AutoCollection as={SimpleTable}
                             services={{fetcher: ac => new DirectDataFetcher(ac)}}
                             properties={{
-                                orderBy: ["year", "name"],
+                                orderBy: ['year', 'name'],
                             }}
                             extra={{
                                 dataSourceOptions: {data: data},

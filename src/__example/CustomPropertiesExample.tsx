@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {AutoCollection} from "../AutoCollection/AutoCollection";
 import {SimpleTable} from "../CollectionComponent/Table/SimpleTable";
-import {DirectDataFetcher} from "../Services/Fetcher/DirectDataFetcher";
 
 class CustomPropertiesExample extends Component {
     render() {
@@ -13,7 +12,6 @@ class CustomPropertiesExample extends Component {
         ];
         return (
             <AutoCollection as={SimpleTable}
-                            services={{fetcher: ac => new DirectDataFetcher(ac)}}
                             properties={{
                                 properties: [{name: 'name', title: 'THE NAME'}, {name: 'year', title: 'THE YEAR'}],
                             }}

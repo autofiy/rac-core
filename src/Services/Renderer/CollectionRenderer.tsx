@@ -1,13 +1,14 @@
+import {Service} from "@autofiy/autofiyable";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 
-export interface CollectionRenderer<Options> {
+export interface CollectionRenderer extends Service {
 
     render(): any;
 
 }
 
 
-export abstract class CollectionRendererBase<Options> implements CollectionRenderer<Options> {
+export abstract class CollectionRendererBase<Options> implements CollectionRenderer {
 
     private readonly autoCollection: IAutoCollection;
 

@@ -1,6 +1,7 @@
 import React from "react";
-import {AutoCollectionState, PropertiesConfiguration} from "../AutoCollection/AutoCollectionProps";
+import {AutoCollectionState} from "../AutoCollection/AutoCollectionProps";
 import {SimpleTable} from "../CollectionComponent/Table/SimpleTable";
+import {PropertiesConfiguration} from "@autofiy/property";
 
 export interface IAutoCollectionDefault {
     defaultPropertiesConfiguration: PropertiesConfiguration;

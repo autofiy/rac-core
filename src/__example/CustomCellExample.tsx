@@ -15,10 +15,10 @@ class CustomCellExample extends Component {
             <AutoCollection as={SimpleTable}
                             services={{fetcher: ac => new DirectDataFetcher(ac)}}
                             properties={{
-                                render: {
+                                renderValue: {
                                     id: (_, data) => <td style={{background: 'red', color: 'white'}}>{data.id}</td>
                                 },
-                                headerRender: {
+                                renderTitle: {
                                     id: () => <th style={{background: 'blue', color: 'white'}}>#</th>
                                 }
                             }}

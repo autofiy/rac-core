@@ -1,5 +1,6 @@
-import {Service, ServiceBase} from "../Base/Service";
-import {EventType} from "../EventManager/EventType";
+import { Service } from "@autofiy/autofiyable";
+import { ServiceBase } from "../Base/Service";
+import { EventType } from "../EventManager/EventType";
 
 export interface DataManager extends Service {
 
@@ -67,7 +68,7 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
             data: items,
             filtered: false
         }, afterChange);
-        this.getAutoCollection().event().emit(EventType.ITEM_ADDED, {index: index, item: item});
+        this.getAutoCollection().event().emit(EventType.ITEM_ADDED, { index: index, item: item });
     }
 
     insertFirst(item: any, afterChange?: () => any): void {
@@ -82,7 +83,7 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
             data: items,
             filtered: false
         }, afterChange);
-        this.getAutoCollection().event().emit(EventType.ITEM_ADDED, {index: items.length - 1, item: item});
+        this.getAutoCollection().event().emit(EventType.ITEM_ADDED, { index: items.length - 1, item: item });
     }
 
     order(orderFunc: (items: any) => any[], afterChange?: () => any): void {
@@ -114,7 +115,7 @@ export class DefaultDataManager extends ServiceBase implements DataManager {
             data: items,
             filtered: false
         }, afterChange);
-        this.getAutoCollection().event().emit(EventType.ITEM_MODIFIED, {old: oldItem, new: newItem, index: index});
+        this.getAutoCollection().event().emit(EventType.ITEM_MODIFIED, { old: oldItem, new: newItem, index: index });
     }
 
 }

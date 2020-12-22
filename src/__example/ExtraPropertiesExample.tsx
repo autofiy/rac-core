@@ -16,7 +16,7 @@ class ExtraPropertiesExample extends Component {
                             services={{fetcher: ac => new DirectDataFetcher(ac)}}
                             properties={{
                                 extraProperties: [{name: 'action', title: 'Action'}],
-                                render: {
+                                renderValue: {
                                     action: (property, data, autoCollection) => <td>
                                         <button onClick={() => {
                                             const message = property.title + "\n" + JSON.stringify(data) + "\n" + autoCollection.data().get().length

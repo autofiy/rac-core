@@ -1,11 +1,11 @@
-import {AutoCollectionProps, AutoCollectionState} from "./AutoCollectionProps";
-import {EventManager} from "../Services/EventManager/EventManager";
-import {DataManager} from "../Services/DataManager/DataManager";
-import {PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
+import { AutoCollectionProps, AutoCollectionState } from "./AutoCollectionProps";
+import { EventManager } from "../Services/EventManager/EventManager";
+import { DataManager } from "../Services/DataManager/DataManager";
+import { Property } from "@autofiy/property";
+import { Autofiyable } from "@autofiy/autofiyable";
+export interface IAutoCollection extends Autofiyable {
 
-export interface IAutoCollection {
-
-    getPropertyGenerator(): PropertyGenerator;
+    getProperties(): Property[]
 
     render(): any;
 

@@ -1,6 +1,6 @@
-import {Component} from "react";
-import {Property, PropertyGenerator} from "../Services/PropertyServices/PropertyGenerator";
-import {IAutoCollection} from "../AutoCollection/IAutoCollection";
+import { Component } from "react";
+import { IAutoCollection } from "../AutoCollection/IAutoCollection";
+import { Property } from "@autofiy/property";
 
 export interface CollectionComponent {
     render(): any;
@@ -13,7 +13,7 @@ export interface CollectionComponent {
 }
 
 interface Props {
-    propertyGenerator: PropertyGenerator;
+    properties: Property[];
     autoCollection: IAutoCollection;
 }
 
@@ -27,7 +27,7 @@ export class CollectionComponentBase extends Component<Props> implements Collect
     }
 
     getProperties(): Property[] {
-        return this.props.propertyGenerator.generate();
+        return this.props.properties;
     }
 
     getAutoCollection(): IAutoCollection {

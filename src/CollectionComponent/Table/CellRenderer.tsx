@@ -1,6 +1,6 @@
-import {Property} from "../../Services/PropertyServices/PropertyGenerator";
 import React from "react";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
+import {Property} from "@autofiy/property";
 
 export interface CellRenderer {
     render(property: Property, data: any): any;
@@ -53,7 +53,7 @@ export class SimpleHeaderCellRenderer extends SimpleCellRendererBase {
     }
 
     protected getCustomRender(property: Property): any {
-        return this.getAutoCollection().getProps().properties?.headerRender?.[property.name];
+        return this.getAutoCollection().getProps().properties?.renderTitle?.[property.name];
     }
 }
 
@@ -64,6 +64,6 @@ export class SimpleBodyCellRenderer extends SimpleCellRendererBase {
 
 
     protected getCustomRender(property: Property): any {
-        return this.getAutoCollection().getProps().properties?.render?.[property.name];
+        return this.getAutoCollection().getProps().properties?.renderValue?.[property.name];
     }
 }

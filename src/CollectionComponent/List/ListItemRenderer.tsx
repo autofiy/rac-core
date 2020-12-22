@@ -1,5 +1,5 @@
-import {Property} from "../../Services/PropertyServices/PropertyGenerator";
 import React from "react";
+import {Property} from "@autofiy/property";
 
 export interface ListItemRenderer {
     render(properties: Property[], item: any): any;
