@@ -60,7 +60,10 @@ export class AutoCollection
     }
 
     async componentDidMount() {
-        await this.fetchData();
+        try {
+            await this.fetchData();
+        } catch {
+        }
     }
 
     componentWillUnmount() {
