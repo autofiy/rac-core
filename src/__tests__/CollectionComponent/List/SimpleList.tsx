@@ -2,7 +2,6 @@ import {SimpleList} from "../../../CollectionComponent/List/SimpleList";
 import {mock} from "jest-mock-extended";
 import {DataManager} from "../../../Services/DataManager/DataManager";
 import {IAutoCollection} from "../../../AutoCollection/IAutoCollection";
-import {SmartPropertyGenerator} from "../../../Services/PropertyServices/PropertyGenerator";
 import React from "react";
 
 describe('SimpleList', () => {
@@ -20,7 +19,10 @@ describe('SimpleList', () => {
         });
         const simpleList = new SimpleList({
             autoCollection: autoCollection,
-            propertyGenerator: new SmartPropertyGenerator(autoCollection)
+            properties: [
+                {name: 'name', title: 'name'},
+                {name: 'year', title: 'year'}
+            ],
         });
         const rendered = simpleList.render();
         expect(rendered).toEqual(

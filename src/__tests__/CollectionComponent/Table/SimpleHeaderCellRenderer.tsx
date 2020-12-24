@@ -1,8 +1,8 @@
 import {SimpleHeaderCellRenderer} from "../../../CollectionComponent/Table/CellRenderer";
 import {mock} from "jest-mock-extended";
 import {IAutoCollection} from "../../../AutoCollection/IAutoCollection";
-import {Property} from "../../../Services/PropertyServices/PropertyGenerator";
 import React from "react";
+import {Property} from "@autofiy/property";
 
 describe('SimpleHeaderCellRenderer', () => {
 
@@ -23,7 +23,7 @@ describe('SimpleHeaderCellRenderer', () => {
         const autoCollection = mock<IAutoCollection>({
             getProps: () => ({
                 properties: {
-                    headerRender: {
+                    renderTitle: {
                         name: customRender
                     }
                 }

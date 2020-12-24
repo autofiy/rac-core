@@ -1,8 +1,8 @@
 import {mock} from "jest-mock-extended";
 import {IAutoCollection} from "../../../AutoCollection/IAutoCollection";
 import {SimpleBodyCellRenderer} from "../../../CollectionComponent/Table/CellRenderer";
-import {Property} from "../../../Services/PropertyServices/PropertyGenerator";
 import React from "react";
+import {Property} from "@autofiy/property";
 
 describe('SimpleBodyCellRenderer', () => {
 
@@ -23,7 +23,7 @@ describe('SimpleBodyCellRenderer', () => {
         const autoCollection = mock<IAutoCollection>({
             getProps: () => ({
                 properties: {
-                    render: {
+                    renderValue: {
                         name: customRender
                     }
                 }

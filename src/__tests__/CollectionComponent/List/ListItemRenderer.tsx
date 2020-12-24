@@ -1,6 +1,7 @@
 import React from "react";
+
 import {SimpleListItemRenderer} from "../../../CollectionComponent/List/ListItemRenderer";
-import {Property} from "../../../Services/PropertyServices/PropertyGenerator";
+import {Property} from "@autofiy/property";
 
 describe('ListItemRenderer', () => {
 

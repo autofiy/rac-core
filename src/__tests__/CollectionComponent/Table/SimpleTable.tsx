@@ -3,7 +3,6 @@ import {IAutoCollection} from "../../../AutoCollection/IAutoCollection";
 import {SimpleTable} from "../../../CollectionComponent/Table/SimpleTable";
 import {DataManager} from "../../../Services/DataManager/DataManager";
 import React from "react";
-import {SmartPropertyGenerator} from "../../../Services/PropertyServices/PropertyGenerator";
 
 describe('SimpleTable', () => {
 
@@ -21,7 +20,10 @@ describe('SimpleTable', () => {
         });
         const simpleTable = new SimpleTable({
             autoCollection: autoCollection,
-            propertyGenerator: new SmartPropertyGenerator(autoCollection)
+            properties: [
+                {name: 'name', title: 'name'},
+                {name: 'year', title: 'year'},
+            ]
         });
         const rendered = simpleTable.render();
         expect(rendered).toEqual(
