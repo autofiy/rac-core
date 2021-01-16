@@ -38,7 +38,7 @@ describe('SimpleCollectionRenderer', () => {
             const rendered = renderer.render();
             const loadingComponent = rendered.props.children.props.children[0];
             expect(loadingComponent).toEqual(renderLoading());
-            expect(rendered.props.children.props.children).toHaveLength(3);
+            expect(rendered.props.children.props.children).toHaveLength(4);
         });
 
         it('should render loading using default renderer', function () {
@@ -51,7 +51,7 @@ describe('SimpleCollectionRenderer', () => {
             const rendered = renderer.render();
             const loadingComponent = rendered.props.children.props.children[0];
             expect(loadingComponent).toEqual(AutoCollectionDefault.renderLoading());
-            expect(rendered.props.children.props.children).toHaveLength(3);
+            expect(rendered.props.children.props.children).toHaveLength(4);
         });
 
         it('should render loading in bottom', function () {
@@ -62,9 +62,9 @@ describe('SimpleCollectionRenderer', () => {
             }, true);
             const renderer = new SimpleCollectionRenderer(ac);
             const rendered = renderer.render();
-            const loadingComponent = rendered.props.children.props.children[2];
+            const loadingComponent = rendered.props.children.props.children[3];
             expect(loadingComponent).toEqual(renderLoading());
-            expect(rendered.props.children.props.children).toHaveLength(3);
+            expect(rendered.props.children.props.children).toHaveLength(4);
         });
 
     });
@@ -81,7 +81,7 @@ describe('SimpleCollectionRenderer', () => {
             const rendered = renderer.render();
             const errorComponent = rendered.props.children.props.children[1];
             expect(errorComponent).toEqual(renderError());
-            expect(rendered.props.children.props.children).toHaveLength(3);
+            expect(rendered.props.children.props.children).toHaveLength(4);
         });
 
         it('should render loading using default renderer', function () {
@@ -94,7 +94,7 @@ describe('SimpleCollectionRenderer', () => {
             const rendered = renderer.render();
             const loadingComponent = rendered.props.children.props.children[1];
             expect(loadingComponent).toEqual(AutoCollectionDefault.renderError("ERROR"));
-            expect(rendered.props.children.props.children).toHaveLength(3);
+            expect(rendered.props.children.props.children).toHaveLength(4);
         });
 
         it('should render loading in bottom', function () {
@@ -105,9 +105,9 @@ describe('SimpleCollectionRenderer', () => {
             }, false, "ERROR");
             const renderer = new SimpleCollectionRenderer(ac);
             const rendered = renderer.render();
-            const errorComponent = rendered.props.children.props.children[2];
+            const errorComponent = rendered.props.children.props.children[3];
             expect(errorComponent).toEqual(renderError());
-            expect(rendered.props.children.props.children).toHaveLength(3);
+            expect(rendered.props.children.props.children).toHaveLength(4);
         });
 
     });

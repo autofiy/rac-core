@@ -1,6 +1,6 @@
 import {configure, mount} from "enzyme";
 import React from "react";
-import Adapter from "enzyme-adapter-react-16";
+import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import {mock} from "jest-mock-extended";
 import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 import {DataManager} from "../../Services/DataManager/DataManager";
