@@ -7,6 +7,32 @@ app.use(cors());
 
 let time = 0;
 
+app.get('/search', (req, res) => {
+    res.json([
+        {id: 1, name: '$ Ali Faris', age: 27},
+        {id: 2, name: '$ Huda Sajed', age: 26},
+        {id: 3, name: '$ Mohammed Ali', age: 1},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+    ]);
+});
+
+app.get('/all', (req, res) => {
+    res.json([
+        {id: 1, name: '$ Ali Faris', age: 27},
+        {id: 2, name: '$ Huda Sajed', age: 26},
+        {id: 3, name: '$ Mohammed Ali', age: 1},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+        {id: 4, name: '$ Fatima Ali', age: 5},
+    ]);
+});
+
 app.get('/', (req, res) => {
 
     time++;

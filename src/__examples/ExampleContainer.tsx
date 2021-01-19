@@ -8,6 +8,7 @@ import OrderExample from "./OrderExample";
 import ExtraPropertiesExample from "./ExtraPropertiesExample";
 import CustomCellExample from "./CustomCellExample";
 import FullUseExample from "./FullUseExample";
+import SearchWithMetadataUseOfCutomRendererExample from "./SearchWithMetadataUseOfCutomRendererExample";
 
 export interface State {
     example?: string
@@ -58,6 +59,10 @@ class ExampleContainer extends Component<any, State> {
             case "full-use":
                 exampleComponent = <FullUseExample/>;
                 break;
+
+            case "search":
+                exampleComponent = <SearchWithMetadataUseOfCutomRendererExample/>
+                break;
         }
 
         return (
@@ -75,6 +80,7 @@ class ExampleContainer extends Component<any, State> {
                         BodyCell
                     </button>
                     <button onClick={() => this.setExample("full-use")}>Full Use</button>
+                    <button onClick={() => this.setExample("search")}>Search</button>
                 </div>
 
                 <br/>
