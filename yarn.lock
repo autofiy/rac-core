@@ -8,9 +8,9 @@
   integrity sha512-gIkQF1WC0Rj9CwrWWFynj6/4sG4NYfLeAA/KROuaQVxrkgMl9sMo8A2k0HopJD5V9WzRc21tK5lMmUbYA9V4Gg==
 
 "@autofiy/property@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@autofiy/property/-/property-1.0.2.tgz#e70a3aca1aa8dbbd12fa5a0826b56822da1a3774"
-  integrity sha512-s4WseSoXWUEXDDrsQ06Z4HU9qEUSYQrF1tkjuXn/RNkoz6HK5dsbw4+uk9nwyR4im24lVmBYgiAhOf9YSoEhow==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@autofiy/property/-/property-1.1.0.tgz#c280c1a8d18a56761674b88f264f501b02bdb8ec"
+  integrity sha512-fag9nf/FVdPzK8I9rRVVD/bSWDZ1nWe/et3eB3eIrE+7t8F3d8sJFuc0B/sXTkyCybjVfHr36GiQJiWb5iIPwg==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.11", "@babel/code-frame@^7.8.3":
   version "7.12.11"

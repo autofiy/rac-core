@@ -3,7 +3,7 @@ import {IAutoCollection} from "../../AutoCollection/IAutoCollection";
 import {Property} from "@autofiy/property";
 
 export interface CellRenderer {
-    render(property: Property, data: any): any;
+    render(property: Property, data: any, rowIndex: number): any;
 }
 
 export abstract class CellRendererBase implements CellRenderer {
@@ -14,10 +14,10 @@ export abstract class CellRendererBase implements CellRenderer {
         this.autoCollection = autoCollection;
     }
 
-    render(property: Property, data: any): any {
+    render(property: Property, data: any, rowIndex: number): any {
         return <React.Fragment key={property.name}>
             {
-                this.renderContent(property, data)
+                this.renderContent(property, data, rowIndex)
             }
         </React.Fragment>
     }
@@ -26,23 +26,20 @@ export abstract class CellRendererBase implements CellRenderer {
         return this.autoCollection;
     }
 
-    protected abstract renderContent(property: Property, data: any): any;
+    protected abstract renderContent(property: Property, data: any, rowIndex: number): any;
 
 }
 
 export abstract class SimpleCellRendererBase extends CellRendererBase {
 
-    protected renderContent(property: Property, data: any): any {
-        const render = this.getCustomRender(property);
-        if (render) {
-            return render(property, data, this.getAutoCollection());
-        }
-        return this.renderDefault(property, data);
+    protected renderContent(property: Property, data: any, rowIndex: number): any {
+        const value = this.getCustomRender(property, data, rowIndex);
+        return value ?? this.renderDefault(property, data);
     }
 
     protected abstract renderDefault(property: Property, data: any): any;
 
-    protected abstract getCustomRender(property: Property): any;
+    protected abstract getCustomRender(property: Property, data: any, rowIndex: number): any;
 
 }
 
@@ -52,8 +49,9 @@ export class SimpleHeaderCellRenderer extends SimpleCellRendererBase {
         return <th>{property.title}</th>
     }
 
-    protected getCustomRender(property: Property): any {
-        return this.getAutoCollection().getProps().properties?.renderTitle?.[property.name];
+    protected getCustomRender(property: Property, data: any, rowIndex: number): any {
+        const renderer = this.getAutoCollection().getProps().properties?.renderTitle?.[property.name];
+        return renderer ? renderer(property, this.getAutoCollection()) : undefined;
     }
 }
 
@@ -62,8 +60,8 @@ export class SimpleBodyCellRenderer extends SimpleCellRendererBase {
         return <td>{data[property.name]}</td>
     }
 
-
-    protected getCustomRender(property: Property): any {
-        return this.getAutoCollection().getProps().properties?.renderValue?.[property.name];
+    protected getCustomRender(property: Property, data: any, rowIndex: number): any {
+        const renderer = this.getAutoCollection().getProps().properties?.renderValue?.[property.name];
+        return renderer ? renderer(property, data, {index: rowIndex}, this.getAutoCollection()) : undefined;
     }
 }

@@ -11,7 +11,7 @@ describe('SimpleBodyCellRenderer', () => {
         const renderer = new SimpleBodyCellRenderer(autoCollection);
         const property: Property = {name: 'name', title: 'THE NAME'};
         const data: any = {name: 'Ali Faris', phone: '-'};
-        const rendered = renderer.render(property, data);
+        const rendered = renderer.render(property, data, -1);
         const expected = <React.Fragment key={'name'}>
             <td>Ali Faris</td>
         </React.Fragment>;
@@ -32,12 +32,12 @@ describe('SimpleBodyCellRenderer', () => {
         const renderer = new SimpleBodyCellRenderer(autoCollection);
         const property: Property = {name: 'name', title: 'THE NAME'};
         const data: any = {name: 'Ali Faris', phone: '-'};
-        const rendered = renderer.render(property, data);
+        const rendered = renderer.render(property, data, 0);
         const expected = <React.Fragment key={'name'}>
             custom render
         </React.Fragment>;
         expect(expected).toEqual(rendered);
-        expect(customRender).toBeCalledWith(property, data, autoCollection);
+        expect(customRender).toBeCalledWith(property, data, {index: 0}, autoCollection);
     });
 
 });

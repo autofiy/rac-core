@@ -41,7 +41,7 @@ export class SimpleTable extends CollectionComponentBase {
     }
 
     protected renderHeaderCells(): any {
-        return this.getProperties().map(p => this.headerCellRenderer.render(p, null));
+        return this.getProperties().map(p => this.headerCellRenderer.render(p, null, -1));
     }
 
     protected renderTableBody(): any {
@@ -57,7 +57,7 @@ export class SimpleTable extends CollectionComponentBase {
             (item: any, index: number) =>
                 <tr key={index}>
                     {
-                        this.getProperties().map(p => this.bodyCellRenderer.render(p, item))
+                        this.getProperties().map(p => this.bodyCellRenderer.render(p, item, index))
                     }
                 </tr>
         );
