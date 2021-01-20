@@ -13,7 +13,7 @@ export interface AutoCollectionProps
     extends AutofiyableProps<ServiceConfiguration, AutoCollectionPropsExtra> {
     as?: any;
     properties?: PropertiesConfiguration;
-    on?: { [event in EventType]: EventCallback };
+    on?: Partial<{ [event in EventType]: EventCallback }>;
 }
 
 export interface ServiceConfiguration extends SC {
