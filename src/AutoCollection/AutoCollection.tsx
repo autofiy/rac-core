@@ -17,7 +17,7 @@ export class AutoCollection
     implements IAutoCollection {
 
     private readonly renderService: CollectionRenderer;
-    private readonly fetcherService: DataFetcher<any>;
+    private fetcherService: DataFetcher<any>;
     private readonly dataManager: DataManager;
     private readonly eventManager: EventManager;
 
@@ -59,10 +59,15 @@ export class AutoCollection
         return undefined;
     }
 
-    async componentDidMount() {
-        try {
-            await this.fetchData();
-        } catch {
+    componentDidMount() {
+        this.fetchData();
+    }
+
+    componentDidUpdate(prevProps: Readonly<AutoCollectionProps>, prevState: Readonly<AutoCollectionState>, snapshot?: any) {
+        if (prevProps.extra?.dataSourceOptions !== this.props.extra?.dataSourceOptions) {
+            this.fetcherService.cancel();
+            this.fetcherService = this.getServiceProvider().getService<DataFetcher<any>>("fetcher", this.fetchServiceCustomHandler);
+            this.fetchData();
         }
     }
 
@@ -105,8 +110,9 @@ export class AutoCollection
         return this.setState(state as any, afterChange);
     }
 
-    private async fetchData(): Promise<void> {
-        await this.fetcherService.fetch();
+    private fetchData(): void {
+        // noinspection JSIgnoredPromiseFromCall
+        this.fetcherService.fetch();
     }
 
 }

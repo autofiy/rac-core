@@ -16,6 +16,18 @@ app.get('/search', (req, res) => {
     ]);
 });
 
+app.get("/heavy-process", (req, res) => {
+    setTimeout(() => {
+        res.json([
+            {id: 1, name: '# Ali Faris', age: 27},
+            {id: 2, name: '# Ali Hussain', age: 29},
+            {id: 3, name: '# Ali Zaid', age: 22},
+            {id: 4, name: '# Ali Mohammed', age: 24},
+            {id: 5, name: '# Ali Ahmed', age: 26},
+        ].filter(item => (req.query.query || "") === "" || item.name.includes(req.query.query)))
+    }, 5000);
+})
+
 app.get('/all', (req, res) => {
     res.json([
         {id: 1, name: '$ Ali Faris', age: 27},

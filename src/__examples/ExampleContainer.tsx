@@ -9,6 +9,7 @@ import ExtraPropertiesExample from "./ExtraPropertiesExample";
 import CustomCellExample from "./CustomCellExample";
 import FullUseExample from "./FullUseExample";
 import SearchWithMetadataUseOfCutomRendererExample from "./SearchWithMetadataUseOfCutomRendererExample";
+import RefetchOnDataOnDataSourceChanged from "./RefetchOnDataOnDataSourceChanged";
 
 export interface State {
     example?: string
@@ -63,6 +64,10 @@ class ExampleContainer extends Component<any, State> {
             case "search":
                 exampleComponent = <SearchWithMetadataUseOfCutomRendererExample/>
                 break;
+
+            case "refetch-on-data-source-change":
+                exampleComponent = <RefetchOnDataOnDataSourceChanged/>;
+                break;
         }
 
         return (
@@ -81,6 +86,7 @@ class ExampleContainer extends Component<any, State> {
                     </button>
                     <button onClick={() => this.setExample("full-use")}>Full Use</button>
                     <button onClick={() => this.setExample("search")}>Search</button>
+                    <button onClick={() => this.setExample("refetch-on-data-source-change")}>Refrech On DS Change</button>
                 </div>
 
                 <br/>
